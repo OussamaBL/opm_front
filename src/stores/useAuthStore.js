@@ -10,6 +10,7 @@ export const useAuthStore = defineStore('auth', {
         getUser: (state) => state.user,
         getName: (state) => state.user.data.name,
         getID: (state) => state.user.data.id,
+        getAvatar: (state) => state.user.data.avatar,
         getRole: (state) => state.user.role,
         getErrors: (state) => state.errors,
         getHeaderConfig(state) {

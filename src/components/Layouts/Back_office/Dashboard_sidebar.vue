@@ -1,281 +1,239 @@
 <template>
-   <!-- Menu -->
-   <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-          <div class="app-brand demo">
-            <!-- <a href="index.html" class="app-brand-link"> -->
-              <h3 style="margin-top: 14px;"><strong style="color: #F28123;">ActivDigital<span style="color: #051922;"></span> </strong></h3>
-            <!-- </a> -->
+  <!-- Menu -->
+  <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo">
+      <h3 style="margin-top: 14px;">
+        <img src="/images/logo.png" style="width: 107px;height: 83px;" alt="">
+       </h3>
+      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+        <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
+        <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
+      </a>
+    </div>
 
-            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-              <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
-              <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1" style="overflow-y: scroll;overflow-x: hidden;">
+      <li class="menu-item">
+        <router-link to="/UserDashboard" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-tachometer" aria-hidden="true"></i>
+          <div data-i18n="Dashboard">Dashboard</div>
+        </router-link>
+      </li>
+      <li class="menu-item">
+        <router-link to="/Users" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Gestion des utilisateurs">Gestion des utilisateurs</div>
+        </router-link>
+      </li>
+
+      <!-- Gestion de production -->
+      <li class="menu-item has-sub">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons fa fa-cogs" aria-hidden="true"></i>
+          <div data-i18n="Gestion de production">Gestion des productions</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <router-link to="/ProductionDashboard" class="menu-link">
+                <div data-i18n="Tableau de bord">Tableau de bord</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/Affaires" class="menu-link">
+                <div data-i18n="Les Affaires">Les Affaires</div>
+            </router-link>
+          </li>
+
+          <!-- Suivi / Pointage -->
+          <li class="menu-item has-sub">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <div data-i18n="Suivi / Pointage">Suivi / Pointage</div>
             </a>
-          </div>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Les Produits finis">Les Produits finis</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Les Fournitures">Les Fournitures</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Pointage de personnel">Pointage de personnel</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Les Machines">Les Machines</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Sous-traitance">Sous-traitance</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Les Transports">Les Transports</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Les location">Les location</div>
+                </router-link>
+              </li>
+              
+              <!-- Nested submenu example -->
+              <!-- <li class="menu-item has-sub">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <div data-i18n="Nested Submenu">Nested Submenu</div>
+                </a>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <router-link to="/NestedLink1" class="menu-link">
+                      <div data-i18n="Nested Link 1">Nested Link 1</div>
+                    </router-link>
+                  </li>
+                  <li class="menu-item">
+                    <router-link to="/NestedLink2" class="menu-link">
+                      <div data-i18n="Nested Link 2">Nested Link 2</div>
+                    </router-link>
+                  </li>
+                </ul>
+              </li> -->
+            </ul>
+          </li>
 
-          <div class="menu-inner-shadow"></div>
-
-          <ul class="menu-inner py-1">
-            
-            <li class="menu-item">
-              <router-link to="/UserDashboard" class="menu-link">
-                <i class="menu-icon tf-icons fa fa-tachometer" aria-hidden="true"></i>
-                <div data-i18n="Dashboard">Dashboard</div>
-              </router-link>
-            </li>
-            <li class="menu-item">
-              <router-link to="/UserDashboard" class="menu-link">
-                <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
-                <div data-i18n="UserDashboard">Users</div>
-              </router-link>
-            </li>
-
-            <!-- Layouts -->
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
-                <div data-i18n="Layouts">Layouts</div>
-              </a>
-
-              <ul class="menu-sub">
+          <!-- Les Analyses -->
+          <li class="menu-item has-sub">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <div data-i18n="Les Analyses">Les Analyses</div>
+            </a>
+            <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="layouts-collapsed-menu.html" class="menu-link">
-                    <div data-i18n="Collapsed menu">Collapsed menu</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-content-navbar.html" class="menu-link">
-                    <div data-i18n="Content navbar">Content navbar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-content-navbar-with-sidebar.html" class="menu-link">
-                    <div data-i18n="Content nav + Sidebar">Content nav + Sidebar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="../horizontal-menu-template" class="menu-link" target="_blank">
-                    <div data-i18n="Horizontal">Horizontal</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-without-menu.html" class="menu-link">
-                    <div data-i18n="Without menu">Without menu</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="Without navbar">Without navbar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-fluid.html" class="menu-link">
-                    <div data-i18n="Fluid">Fluid</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-container.html" class="menu-link">
-                    <div data-i18n="Container">Container</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-blank.html" class="menu-link">
-                    <div data-i18n="Blank">Blank</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            
-            <!-- <li class="menu-item active open">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                <div data-i18n="Dashboards">Dashboards</div>
-                <div class="badge bg-primary rounded-pill ms-auto">5</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item active">
-                  <a href="index.html" class="menu-link">
-                    <div data-i18n="Analytics">Analytics</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="dashboards-crm.html" class="menu-link">
-                    <div data-i18n="CRM">CRM</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="app-ecommerce-dashboard.html" class="menu-link">
-                    <div data-i18n="eCommerce">eCommerce</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="app-logistics-dashboard.html" class="menu-link">
-                    <div data-i18n="Logistics">Logistics</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="app-academy-dashboard.html" class="menu-link">
-                    <div data-i18n="Academy">Academy</div>
-                  </a>
-                </li>
-              </ul>
-            </li> -->
-            
-            <!-- e-commerce-app menu start -->
-            <!-- <li class="menu-item active open">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ti ti-shopping-cart"></i>
-                <div data-i18n="eCommerce">eCommerce</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item active">
-                  <a href="app-ecommerce-dashboard.html" class="menu-link">
-                    <div data-i18n="Dashboard">Dashboard</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <div data-i18n="Products">Products</div>
-                  </a>
-                  <ul class="menu-sub">
-                    <li class="menu-item">
-                      <a href="app-ecommerce-product-list.html" class="menu-link">
-                        <div data-i18n="Product List">Product List</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="app-ecommerce-product-add.html" class="menu-link">
-                        <div data-i18n="Add Product">Add Product</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="app-ecommerce-category-list.html" class="menu-link">
-                        <div data-i18n="Category List">Category List</div>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="menu-item">
-                  <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <div data-i18n="Order">Order</div>
-                  </a>
-                  <ul class="menu-sub">
-                    <li class="menu-item">
-                      <a href="app-ecommerce-order-list.html" class="menu-link">
-                        <div data-i18n="Order List">Order List</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="app-ecommerce-order-details.html" class="menu-link">
-                        <div data-i18n="Order Details">Order Details</div>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="menu-item">
-                  <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <div data-i18n="Customer">Customer</div>
-                  </a>
-                  <ul class="menu-sub">
-                    <li class="menu-item">
-                      <a href="app-ecommerce-customer-all.html" class="menu-link">
-                        <div data-i18n="All Customers">All Customers</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Customer Details">Customer Details</div>
-                      </a>
-                      <ul class="menu-sub">
-                        <li class="menu-item">
-                          <a href="app-ecommerce-customer-details-overview.html" class="menu-link">
-                            <div data-i18n="Overview">Overview</div>
-                          </a>
-                        </li>
-                        <li class="menu-item">
-                          <a href="app-ecommerce-customer-details-security.html" class="menu-link">
-                            <div data-i18n="Security">Security</div>
-                          </a>
-                        </li>
-                        <li class="menu-item">
-                          <a href="app-ecommerce-customer-details-billing.html" class="menu-link">
-                            <div data-i18n="Address & Billing">Address & Billing</div>
-                          </a>
-                        </li>
-                        <li class="menu-item">
-                          <a href="app-ecommerce-customer-details-notifications.html" class="menu-link">
-                            <div data-i18n="Notifications">Notifications</div>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li class="menu-item">
-                  <a href="app-ecommerce-manage-reviews.html" class="menu-link">
-                    <div data-i18n="Manage Reviews">Manage Reviews</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="app-ecommerce-referral.html" class="menu-link">
-                    <div data-i18n="Referrals">Referrals</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <div data-i18n="Settings">Settings</div>
-                  </a>
-                  <ul class="menu-sub">
-                    <li class="menu-item">
-                      <a href="app-ecommerce-settings-detail.html" class="menu-link">
-                        <div data-i18n="Store Details">Store Details</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="app-ecommerce-settings-payments.html" class="menu-link">
-                        <div data-i18n="Payments">Payments</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="app-ecommerce-settings-checkout.html" class="menu-link">
-                        <div data-i18n="Checkout">Checkout</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="app-ecommerce-settings-shipping.html" class="menu-link">
-                        <div data-i18n="Shipping & Delivery">Shipping & Delivery</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="app-ecommerce-settings-locations.html" class="menu-link">
-                        <div data-i18n="Locations">Locations</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="app-ecommerce-settings-notifications.html" class="menu-link">
-                        <div data-i18n="Notifications">Notifications</div>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li> -->
-            <!-- e-commerce-app menu end -->
-
-          </ul>
-    </aside>
-    <!-- / Menu -->
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Récapitulatif BDP">Récapitulatif BDP</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Rendement">Rendement</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Consommation des constituants">Consommation des constituants</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Depenses">Depenses</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Recettes">Recettes</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Marge brute">Marge brute</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Résultat financier">Résultat financier</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Dépenses réelles par catégories">Dépenses réelles par catégories</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Planning des produits finis">Planning des produits finis</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Planning des contituant">Planning des contituant</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Rendement journalier">Rendement journalier</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Rendement total">Rendement total</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Consommation imprévue">Consommation imprévue</div>
+                </router-link>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+  <!-- / Menu -->
 </template>
+<script>
+export default {
+  mounted() {
+    this.initMenuToggle();
+  },
+  methods: {
+    initMenuToggle() {
+      const menuItems = document.querySelectorAll('.menu-item.has-sub > .menu-link.menu-toggle');
+      menuItems.forEach(menuItem => {
+        menuItem.addEventListener('click', function () {
+          const parentItem = menuItem.parentElement;
+          const isOpen = parentItem.classList.contains('open');
+          if (isOpen) {
+            parentItem.classList.remove('open');
+          } else {
+            parentItem.classList.add('open');
+          }
+        });
+      });
+    }
+  }
+};
+</script>
 <style scoped>
-.menu-vertical .menu-inner{
+.bg-menu-theme .menu-inner .menu-item.open > .menu-link.menu-toggle, 
+.layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item.open > .menu-link.menu-toggle, 
+.bg-menu-theme .menu-inner .menu-item.active > .menu-link.menu-toggle, 
+.layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item.active > .menu-link.menu-toggle {
+  background-color: #bf7422;
+}
+.menu-vertical .menu-inner {
   background-color: #051922;
 }
-.menu-vertical .menu-inner > .menu-item .menu-link{
+.menu-vertical .menu-inner > .menu-item .menu-link {
   color: white;
 }
-html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item:not(.active) > .menu-link:hover, .layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item:not(.active) > .menu-link:hover{
+html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item:not(.active) > .menu-link:hover, 
+.layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item:not(.active) > .menu-link:hover {
   background: #bf7422;
 }
-.menu-icon{
+.menu-icon {
   font-size: 18px;
+}
+.menu-sub {
+  display: none;
+}
+.menu-item.has-sub.open > .menu-sub {
+  display: block;
 }
 </style>

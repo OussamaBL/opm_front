@@ -13,7 +13,8 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                         <div class="avatar avatar-online">
-                            <img :src="`/images/users/admin.JPG`"  class="h-auto rounded-circle" />
+                            <img v-if="store.getUser" :src="`/images/avatars/${store.getAvatar}`" style="height: 40px !important;width: 40px !important;"  class="h-auto rounded-circle" />
+                            <img v-else src="/images/avatars/avatar.png" class="h-auto rounded-circle" />
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -22,7 +23,8 @@
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar avatar-online">
-                                        <img :src="`/images/users/admin.JPG`" style="height: 36px;" alt class="h-auto rounded-circle" />
+                                        <img v-if="store.getUser" :src="`/images/avatars/${store.getAvatar}`" style="height: 36px;" alt class="h-auto rounded-circle" />
+                                        <img v-else src="/images/avatars/avatar.png" style="height: 36px;" alt class="rounded-circle" />
                                         </div>
                                     </div>
                                     <div class="flex-grow-1">
