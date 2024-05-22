@@ -40,7 +40,7 @@
             </router-link>
           </li>
           <li class="menu-item">
-            <router-link to="/Affaires" class="menu-link">
+            <router-link to="/GsAffaires" class="menu-link">
                 <div data-i18n="Les Affaires">Les Affaires</div>
             </router-link>
           </li>

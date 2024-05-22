@@ -26,7 +26,7 @@
                           <label class="form-label" for="modalEditUserFirstName">Client</label>
                             <select id="modalEditUserCountry" class="select2 form-select" v-model="data.affaire.id_client" data-allow-clear="true">
                                 <option value="">Select</option>
-                                <option v-for="client in data.data_clients" :value="client.id">{{ client.name }}</option>
+                                <option v-for="client in data.data_clients" :key="client.id" :value="client.id">{{ client.name }}</option>
                             </select>
                         </div>
 
@@ -89,69 +89,73 @@
   <!--/ Edit User Modal -->
   
     <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="py-3 mb-2"><span class="text-muted fw-light">Gestion de production /</span> Les affaires</h4>
-              <div class="app-ecommerce-category">
+            <h4 class="py-3 mb-2"><span class="text-muted fw-light">Gestion de production /</span> Les affaires</h4>
+            <div class="app-ecommerce-category">
                 <!-- Category List Table -->
                 <div class="card">
-                  <button class="btn btn-primary" style="width: 143px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addAffaire" data-bs-target="#editUser">Ajouter Affaire</button>
-                  <div class="table-responsive text-nowrap">
-                   <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
-                  <table v-if="!$data.loading" class="table">
-                    <thead>
-                      <tr style="background-color: #051922;">
-                        <th>N d'affaire</th>
-                        <th>Affaire</th>
-                        <th>Objet</th>
-                        <th>Client</th>
-                        <th>Montant devis étudié</th>
-                        <th>Montant définitif TTC</th>
-                        <th>Date début de contrat</th>
-                        <th>Délai de contrat</th>
-                        <th>Durée d'arret justifiée</th>
-                        <th>Date fin de contrat</th>
-                        <th>Date d'offre</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                   
-                    <tbody class="table-border-bottom-0">
-                      
-                      <tr v-for="affaire in data.data_affaires" :key="affaire.id">
-                        <td>{{ affaire.num_affaire }}</td>
-                        <td>{{ affaire.affaire }}</td>
-                        <td>{{ affaire.objet }}</td>
-                        <td>{{ affaire.client.name }}</td>
-                        <td>{{ affaire.montant_devis }}</td>
-                        <td>{{ affaire.montant_definitif_ttc }}</td>
-                        <td>{{ affaire.date_debut_contrat }}</td>
-                        <td>{{ affaire.delai_contrat }}</td>
-                        <td>{{ affaire.duree_arret }}</td>
-                        <td>{{ affaire.date_fin_contrat }}</td>
-                        <td>{{ affaire.date_offre }}</td>
-                        <td>{{ affaire.status }}</td>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="ti ti-dots-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateAffaire(affaire)" data-bs-target="#editUser" href="javascript:void(0);">
-                                <i class="ti ti-pencil me-1"></i> Edit
-                              </a>
-                              <a class="dropdown-item" @click="deleteAffaire(user)" href="javascript:void(0);"
-                                ><i class="ti ti-trash me-1"></i> Delete</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    <button class="btn btn-primary" style="width: 143px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addAffaire" data-bs-target="#editUser">Ajouter Affaire</button>
+                    <div class="table-responsive text-nowrap">
+                        <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
+                        <table v-if="!$data.loading" class="table">
+                            <thead>
+                            <tr style="background-color: #051922;">
+                                <th>N d'affaire</th>
+                                <th>Affaire</th>
+                                <th>Objet</th>
+                                <th>Client</th>
+                                <th>Montant devis étudié</th>
+                                <th>Montant définitif TTC</th>
+                                <th>Date début de contrat</th>
+                                <th>Délai de contrat</th>
+                                <th>Durée d'arret justifiée</th>
+                                <th>Date fin de contrat</th>
+                                <th>Date d'offre</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                        
+                            <tbody class="table-border-bottom-0">
+                            
+                            <tr v-for="affaire in data.data_affaires.data" :key="affaire.id">
+                                <td>{{ affaire.num_affaire }}</td>
+                                <td>{{ affaire.affaire }}</td>
+                                <td>{{ affaire.objet }}</td>
+                                <td>{{ affaire.client.name }}</td>
+                                <td>{{ affaire.montant_devis }}</td>
+                                <td>{{ affaire.montant_definitif_ttc }}</td>
+                                <td>{{ affaire.date_debut_contrat }}</td>
+                                <td>{{ affaire.delai_contrat }}</td>
+                                <td>{{ affaire.duree_arret }}</td>
+                                <td>{{ affaire.date_fin_contrat }}</td>
+                                <td>{{ affaire.date_offre }}</td>
+                                <td>{{ affaire.status }}</td>
+                                <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                    <i class="ti ti-dots-vertical"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                    <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateAffaire(affaire)" data-bs-target="#editUser" href="javascript:void(0);">
+                                        <i class="ti ti-pencil me-1"></i> Edit
+                                    </a>
+                                    <a class="dropdown-item" @click="deleteAffaire(user)" href="javascript:void(0);"
+                                        ><i class="ti ti-trash me-1"></i> Delete</a>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <Bootstrap5Pagination
+                        :data="data.data_affaires"
+                        @pagination-change-page="fetch_data" style="margin: 16px;justify-content: center !important;"
+                    />
                 </div>
-                </div>
+            </div>
                 <!-- Offcanvas to add new customer -->
                 
-              </div>
     </div>
             <!-- / Content -->
   </template>
@@ -161,6 +165,7 @@
     import Swal from 'sweetalert2';
     // import router from '@/router';
     import { useAuthStore } from '@/stores/useAuthStore.js';
+    import { Bootstrap5Pagination } from 'laravel-vue-pagination';
   
     const store = useAuthStore();
     
@@ -232,11 +237,11 @@
       }
     };
 
-    const fetch_data = async () => {
+    const fetch_data = async (page = 1) => {
       data.data_affaires=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/affaires/index');
+        const response = await axios.get('/api/affaires/index?page='+page);
         if(response.data.exist){
           data.data_affaires=response.data.affaires;
         } 
@@ -344,7 +349,10 @@
       }
     }
   
-    onMounted(fetch_data); 
+    onMounted(()=>{
+        fetch_data();
+        fetch_data_clients();
+    }); 
   </script>
   <style>
   div:where(.swal2-container) {
