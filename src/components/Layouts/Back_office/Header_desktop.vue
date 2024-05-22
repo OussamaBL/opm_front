@@ -38,6 +38,12 @@
                             <div class="dropdown-divider"></div>
                         </li>
                         <li>
+                            <router-link v-if="store.getUser" to="/UserProfile" class="dropdown-item">
+                                <i class="ti ti-user me-2 ti-sm"></i>
+                                <span class="align-middle">Profile</span>
+                            </router-link>
+                        </li>
+                        <li>
                             <button v-if="store.getUser" class="dropdown-item" @click="userLogout" href="#">
                                 <i class="ti ti-logout me-2 ti-sm"></i>
                                 <span class="align-middle">Log Out</span>

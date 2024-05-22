@@ -21,7 +21,7 @@
         </router-link>
       </li>
       <li class="menu-item">
-        <router-link to="/Users" class="menu-link">
+        <router-link to="/UserDashboard" class="menu-link">
           <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
           <div data-i18n="Gestion des utilisateurs">Gestion des utilisateurs</div>
         </router-link>

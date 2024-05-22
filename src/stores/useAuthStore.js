@@ -11,6 +11,7 @@ export const useAuthStore = defineStore('auth', {
         getName: (state) => state.user.data.name,
         getID: (state) => state.user.data.id,
         getAvatar: (state) => state.user.data.avatar,
+        getEmail: (state) => state.user.data.email,
         getRole: (state) => state.user.role,
         getErrors: (state) => state.errors,
         getHeaderConfig(state) {
