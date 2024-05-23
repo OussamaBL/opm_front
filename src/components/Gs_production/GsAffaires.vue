@@ -93,7 +93,8 @@
             <div class="app-ecommerce-category">
                 <!-- Category List Table -->
                 <div class="card">
-                    <button class="btn btn-primary" style="width: 143px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addAffaire" data-bs-target="#editUser">Ajouter Affaire</button>
+                    <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addAffaire" data-bs-target="#editUser">Ajouter Affaire</button>
+                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher affaire...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -171,6 +172,7 @@
     
     const data = reactive({
       data_affaires: [],
+      searchQuery: '',
       affaire: {
         id: '',
         num_affaire: '',
@@ -241,7 +243,11 @@
       data.data_affaires=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/affaires/index?page='+page);
+        const response = await axios.get('/api/affaires/index?page='+page,{
+          params: {
+            search: data.searchQuery
+          }
+        });
         if(response.data.exist){
           data.data_affaires=response.data.affaires;
         } 
