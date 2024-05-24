@@ -183,6 +183,25 @@
           </li>
         </ul>
       </li>
+      <li class="menu-item">
+        <router-link to="/Gs_unites" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Les Unités">Les Unités</div>
+        </router-link>
+      </li>
+      <li class="menu-item">
+        <router-link to="/Type_produits" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Les types des produits">Les types des produits</div>
+        </router-link>
+      </li>
+      
+      <li class="menu-item">
+        <router-link to="/Type_produits" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Listes des produits fini">Listes des produits fini</div>
+        </router-link>
+      </li>
     </ul>
   </aside>
   <!-- / Menu -->

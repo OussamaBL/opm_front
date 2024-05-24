@@ -172,6 +172,7 @@
     
     const data = reactive({
       data_affaires: [],
+      data_clients: [],
       searchQuery: '',
       affaire: {
         id: '',
