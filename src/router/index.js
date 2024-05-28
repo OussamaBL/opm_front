@@ -7,7 +7,13 @@ import UserProfile from "@/components/Dashboard/UserProfile.vue";
 import GsAffaires from "@/components/Gs_production/GsAffaires.vue";
 import Type_produits from "@/components/Gs_production/Type_produits.vue";
 import Gs_unites from "@/components/Gs_production/GsUnites.vue";
-
+import GsPersonnel from "@/components/Gs_personnel/GsPersonnel.vue";
+import GsAvances from "@/components/Gs_personnel/GsAvances.vue";
+import GsConges from "@/components/Gs_personnel/GsConges.vue";
+import GsAbsences from "@/components/Gs_personnel/GsAbsences.vue";
+import Type_personnel from "@/components/Gs_personnel/Type_personnel.vue";
+import Type_clients from "@/components/Gs_production/Type_clients.vue";
+import GsClients from "@/components/Gs_production/GsClients.vue";
 
 // import { useAuthStore } from '@/stores/useAuthStore.js';
 
@@ -62,6 +68,41 @@ const router = createRouter({
                 path: '/Gs_unites',
                 name: 'Gs_unites',
                 component:  Gs_unites,
+              },
+              {
+                path: '/GsPersonnels',
+                name: 'GsPersonnel',
+                component:  GsPersonnel,
+              },
+              {
+                path: '/GsAvances',
+                name: 'GsAvances',
+                component:  GsAvances,
+              },
+              {
+                path: '/GsConges',
+                name: 'GsConges',
+                component:  GsConges,
+              },
+              {
+                path: '/GsAbsences',
+                name: 'GsAbsences',
+                component:  GsAbsences,
+              },
+              {
+                path: '/Type_personnel',
+                name: 'Type_personnel',
+                component:  Type_personnel,
+              },
+              {
+                path: '/Type_clients',
+                name: 'Type_clients',
+                component:  Type_clients,
+              },
+              {
+                path: '/GsClients',
+                name: 'GsClients',
+                component:  GsClients,
               },
               
             ],

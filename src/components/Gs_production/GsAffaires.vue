@@ -122,7 +122,7 @@
                                 <td>{{ affaire.num_affaire }}</td>
                                 <td>{{ affaire.affaire }}</td>
                                 <td>{{ affaire.objet }}</td>
-                                <td>{{ affaire.client.name }}</td>
+                                <td>{{ affaire.client.libelle }}</td>
                                 <td>{{ affaire.montant_devis }}</td>
                                 <td>{{ affaire.montant_definitif_ttc }}</td>
                                 <td>{{ affaire.date_debut_contrat }}</td>

@@ -183,6 +183,186 @@
           </li>
         </ul>
       </li>
+
+       <!-- Gestion de personnel -->
+       <li class="menu-item has-sub">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons fa fa-cogs" aria-hidden="true"></i>
+          <div data-i18n="Gestion de personnel">Gestion du personnel</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <router-link to="/PersonnelDashboard" class="menu-link">
+                <div data-i18n="Tableau de bord">Tableau de bord</div>
+            </router-link>
+          </li>
+          
+          <li class="menu-item">
+            <router-link to="/Type_personnel" class="menu-link">
+                <div data-i18n="Les Types de Personnel">Les Types de Personnel</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/GsPersonnels" class="menu-link">
+                <div data-i18n="Les Personnels">Les Personnels</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/GsAvances" class="menu-link">
+                <div data-i18n="Les Avances">Les Avances</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/GsConges" class="menu-link">
+                <div data-i18n="Les Congés">Les Congés</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/GsAbsences" class="menu-link">
+                <div data-i18n="Les Absences">Les Absences</div>
+            </router-link>
+          </li>
+
+          <!-- Suivi / Pointage -->
+          <li class="menu-item has-sub">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <div data-i18n="Suivi / Pointage">Suivi / Pointage</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Les Produits finis">Les Produits finis</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Les Fournitures">Les Fournitures</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Pointage de personnel">Pointage de personnel</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Les Machines">Les Machines</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Sous-traitance">Sous-traitance</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Les Transports">Les Transports</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/Clients" class="menu-link">
+                  <div data-i18n="Les location">Les location</div>
+                </router-link>
+              </li>
+              
+              <!-- Nested submenu example -->
+              <!-- <li class="menu-item has-sub">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <div data-i18n="Nested Submenu">Nested Submenu</div>
+                </a>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <router-link to="/NestedLink1" class="menu-link">
+                      <div data-i18n="Nested Link 1">Nested Link 1</div>
+                    </router-link>
+                  </li>
+                  <li class="menu-item">
+                    <router-link to="/NestedLink2" class="menu-link">
+                      <div data-i18n="Nested Link 2">Nested Link 2</div>
+                    </router-link>
+                  </li>
+                </ul>
+              </li> -->
+            </ul>
+          </li>
+
+          <!-- Les Analyses -->
+          <li class="menu-item has-sub">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <div data-i18n="Les Analyses">Les Analyses</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Récapitulatif BDP">Récapitulatif BDP</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Rendement">Rendement</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Consommation des constituants">Consommation des constituants</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Depenses">Depenses</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Recettes">Recettes</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Marge brute">Marge brute</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Résultat financier">Résultat financier</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Dépenses réelles par catégories">Dépenses réelles par catégories</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Planning des produits finis">Planning des produits finis</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Planning des contituant">Planning des contituant</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Rendement journalier">Rendement journalier</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Rendement total">Rendement total</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Consommation imprévue">Consommation imprévue</div>
+                </router-link>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      
       <li class="menu-item">
         <router-link to="/Gs_unites" class="menu-link">
           <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
@@ -202,6 +382,19 @@
           <div data-i18n="Listes des produits fini">Listes des produits fini</div>
         </router-link>
       </li>
+      <li class="menu-item">
+        <router-link to="/Type_clients" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Les types de client">Les types de client</div>
+        </router-link>
+      </li>
+      <li class="menu-item">
+        <router-link to="/GsClients" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Listes des clients">Listes des clients</div>
+        </router-link>
+      </li>
+      
     </ul>
   </aside>
   <!-- / Menu -->
