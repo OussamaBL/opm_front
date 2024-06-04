@@ -80,7 +80,7 @@
                                     </button>
                                     <div class="dropdown-menu">
                                     <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateAffaire_Produit(affaire_produit)" data-bs-target="#editUser" href="javascript:void(0);">
-                                        <i class="ti ti-pencil me-1"></i> Edit
+                                        <i class="ti ti-pencil me-1"></i> Edit 
                                     </a>
                                     <a class="dropdown-item" @click="deleteAffaire(affaire_produit)" href="javascript:void(0);"
                                         ><i class="ti ti-trash me-1"></i> Delete</a>
