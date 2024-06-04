@@ -61,7 +61,7 @@
             <div class="app-ecommerce-category">
                 <!-- Category List Table -->
                 <div class="card">
-                    <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addUnite" data-bs-target="#editUser">Ajouter client</button>
+                    <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addClient" data-bs-target="#editUser">Ajouter client</button>
                     <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Unités...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">

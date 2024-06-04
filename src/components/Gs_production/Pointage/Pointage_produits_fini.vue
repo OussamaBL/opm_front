@@ -7,72 +7,28 @@
                     <div class="modal-body">
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       <div class="text-center mb-4">
-                        <h3 class="mb-2">Affaire</h3>
+                        <h3 class="mb-2">Les Produits d'affaire</h3>
                       </div>
+                      
                       <form id="editUserForm" class="row g-3" onsubmit="return false">
-                        <!-- <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserFirstName">Name</label>
-                          <input type="text" id="modalEditUserFirstName" v-model="data.user.name" class="form-control" placeholder="Enter the name of user" />
-                        </div> -->
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserEmail">Affaire</label>
-                          <input type="text" id="modalEditUserEmail" v-model="data.affaire.affaire" class="form-control" placeholder="Saisie l'affaire" />
-                        </div>
-                        <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserFirstName">Objet</label>
-                          <input type="text" id="modalEditUserFirstName" v-model="data.affaire.objet" class="form-control" placeholder="Saisie l'objet" />
-                        </div>
-                        <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserFirstName">Client</label>
-                            <select id="modalEditUserCountry" class="select2 form-select" v-model="data.affaire.client_id" data-allow-clear="true">
+                          <label class="form-label" for="modalEditUserFirstName">Produits finis</label>
+                            <select id="modalEditUserCountry" class="select2 form-select" v-model="data.affaire_produit.produit_fini_id" data-allow-clear="true">
                                 <option value="">Select</option>
-                                <option v-for="client in data.data_clients" :key="client.id" :value="client.id">{{ client.name }}</option>
+                                <option v-for="produit in data.data_produits" :key="produit.id" :value="produit.id">{{ produit.libelle }}</option>
                             </select>
                         </div>
-
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserFirstName">Montant devis étudié</label>
-                          <input type="text" id="modalEditUserFirstName" v-model="data.affaire.montant_devis" class="form-control" placeholder="Saisie le Montant devis étudié" />
+                          <label class="form-label" for="modalEditUserFirstName">Quantité</label>
+                          <input type="number" id="modalEditUserFirstName" v-model="data.affaire_produit.quantite" class="form-control" placeholder="Saisie quantité" />
                         </div>
-                        <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserEmail">Montant définitif TTC</label>
-                          <input type="text" id="modalEditUserEmail" v-model="data.affaire.montant_definitif_ttc" class="form-control" placeholder="Saisie Montant définitif TTC" />
-                        </div>
-                        <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserFirstName">Date début de contrat</label>
-                          <input type="date" id="modalEditUserFirstName" v-model="data.affaire.date_debut_contrat" class="form-control" />
-                        </div>
-                        <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserEmail">Délai de contrat</label>
-                          <input type="number" id="modalEditUserEmail" v-model="data.affaire.delai_contrat" class="form-control" />
-                        </div>
-                        <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserFirstName">Durée d'arret justifiée</label>
-                          <input type="number" id="modalEditUserFirstName" v-model="data.affaire.duree_arret" class="form-control"  />
-                        </div>
-                        <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserEmail">Date fin de contrat</label>
-                          <input type="date" id="modalEditUserEmail" v-model="data.affaire.date_fin_contrat" class="form-control" />
-                        </div>
-                        <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserEmail">Date d'offre</label>
-                          <input type="date" id="modalEditUserEmail" v-model="data.affaire.date_offre" class="form-control" />
-                        </div>
-                        <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserFirstName">Status</label>
-                            <select id="modalEditUserCountry" class="select2 form-select" v-model="data.affaire.status" data-allow-clear="true">
-                                <option value="">Select</option>
-                                <option value="soumission">Soumission</option>
-                                <option value="affaire_interne">Affaire interne</option>
-                                <option value="traveaux">Traveaux</option>
-                            </select>
-                        </div>
+                       
 
                        
 
                         <div class="col-12 text-center">
-                          <button v-if="data.action=='add'" type="submit" @click="addAffaire()" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                          <button v-if="data.action=='edit'" type="submit" @click="updateAffaire()" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                          <button v-if="data.action=='add'" type="submit" @click="addAffaire_Produit()" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                          <button v-if="data.action=='edit'" type="submit" @click="updateAffaire_Produit()" class="btn btn-primary me-sm-3 me-1">Submit</button>
                           <button
                             type="button"
                             class="btn btn-label-secondary"
@@ -89,58 +45,44 @@
   <!--/ Edit User Modal -->
   
     <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="py-3 mb-2"><span class="text-muted fw-light">Gestion de production /</span> Les affaires</h4>
+            <h4 class="py-3 mb-2"><span class="text-muted fw-light">Gestion de production / Pointage | Suivi /</span>Les Produits fini  </h4>
             <div class="app-ecommerce-category">
                 <!-- Category List Table -->
                 <div class="card">
-                    <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addAffaire" data-bs-target="#editUser">Ajouter Affaire</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher affaire...">
+                    <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addAffaire_Produit" data-bs-target="#editUser">Ajouter</button>
+                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des produits...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
                             <thead>
                             <tr style="background-color: #051922;">
-                                <th>N d'affaire</th>
+                                <th>Code</th>
+                                <th>Produit fini</th>
+                                <th>Unité</th>
+                                <th>Quantité</th>
                                 <th>Affaire</th>
-                                <th>Objet</th>
-                                <th>Client</th>
-                                <th>Montant devis étudié</th>
-                                <th>Montant définitif TTC</th>
-                                <th>Date début de contrat</th>
-                                <th>Délai de contrat</th>
-                                <th>Durée d'arret justifiée</th>
-                                <th>Date fin de contrat</th>
-                                <th>Date d'offre</th>
-                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                         
                             <tbody class="table-border-bottom-0">
                             
-                            <tr v-for="affaire in data.data_affaires.data" :key="affaire.id">
-                                <td>{{ affaire.num_affaire }}</td>
-                                <td>{{ affaire.affaire }}</td>
-                                <td>{{ affaire.objet }}</td>
-                                <td>{{ affaire.client.libelle }}</td>
-                                <td>{{ affaire.montant_devis }}</td>
-                                <td>{{ affaire.montant_definitif_ttc }}</td>
-                                <td>{{ affaire.date_debut_contrat }}</td>
-                                <td>{{ affaire.delai_contrat }}</td>
-                                <td>{{ affaire.duree_arret }}</td>
-                                <td>{{ affaire.date_fin_contrat }}</td>
-                                <td>{{ affaire.date_offre }}</td>
-                                <td>{{ affaire.status }}</td>
+                            <tr v-for="affaire_produit in data.data_affaire_produits.data" :key="affaire_produit.id">
+                                <td>{{ affaire_produit.produit.code }}</td>
+                                <td>{{ affaire_produit.produit.libelle }}</td>
+                                <td>{{ affaire_produit.produit.unite.libelle }}</td>
+                                <td>{{ affaire_produit.quantite}}</td>
+                                <td>{{ affaire_produit.affaire.affaire}}</td>
                                 <td>
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                     <i class="ti ti-dots-vertical"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                    <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateAffaire(affaire)" data-bs-target="#editUser" href="javascript:void(0);">
+                                    <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateAffaire_Produit(affaire_produit)" data-bs-target="#editUser" href="javascript:void(0);">
                                         <i class="ti ti-pencil me-1"></i> Edit
                                     </a>
-                                    <a class="dropdown-item" @click="deleteAffaire(affaire)" href="javascript:void(0);"
+                                    <a class="dropdown-item" @click="deleteAffaire(affaire_produit)" href="javascript:void(0);"
                                         ><i class="ti ti-trash me-1"></i> Delete</a>
                                     </div>
                                 </div>
@@ -179,7 +121,7 @@
         num_affaire: '',
         affaire: '',
         objet: '',
-        client_id: '',
+        id_client: '',
         montant_devis: '',
         montant_definitif_ttc: '',
         date_debut_contrat: '',
@@ -198,7 +140,7 @@
         data.affaire.num_affaire= '',
         data.affaire.affaire= '',
         data.affaire.objet= '',
-        data.affaire.client_id= '', 
+        data.affaire.id_client= '', 
         data.affaire.montant_devis= '',
         data.affaire.montant_definitif_ttc= '',
         data.affaire.date_debut_contrat= '',
@@ -213,7 +155,7 @@
         data.affaire.num_affaire= affaire.num_affaire,
         data.affaire.affaire= affaire.affaire,
         data.affaire.objet= affaire.objet,
-        data.affaire.client_id= affaire.client_id, 
+        data.affaire.id_client= affaire.id_client, 
         data.affaire.montant_devis= affaire.montant_devis,
         data.affaire.montant_definitif_ttc= affaire.montant_definitif_ttc,
         data.affaire.date_debut_contrat= affaire.date_debut_contrat,

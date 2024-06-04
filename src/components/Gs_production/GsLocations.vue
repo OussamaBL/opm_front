@@ -7,22 +7,25 @@
                     <div class="modal-body">
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       <div class="text-center mb-4">
-                        <h3 class="mb-2">Type client</h3>
+                        <h3 class="mb-2">Location</h3>
                       </div>
                       <form id="editUserForm" class="row g-3" onsubmit="return false">
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserEmail">Libellé</label>
-                          <input type="text" id="modalEditUserEmail" v-model="data.type_client.libelle" class="form-control" placeholder="Saisie le libelle" />
+                          <label class="form-label" for="modalEditUserFirstName">Constituant</label>
+                          <input type="text" id="modalEditUserFirstName" v-model="data.location.constituant" class="form-control" placeholder="Saisie Constituant" />
                         </div>
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserFirstName">Remise</label>
-                          <input type="number" id="modalEditUserFirstName" v-model="data.type_client.remise" class="form-control" placeholder="Saisie remise" />
+                          <label class="form-label" for="modalEditUserFirstName">Unité</label>
+                            <select id="modalEditUserCountry" class="select2 form-select" v-model="data.location.unite_id" data-allow-clear="true">
+                                <option value="">Select</option>
+                                <option v-for="unite in data.data_unites" :key="unite.id" :value="unite.id">{{ unite.libelle }}</option>
+                            </select>
                         </div>
                         
 
                         <div class="col-12 text-center">
-                          <button v-if="data.action=='add'" type="submit" @click="addTypeClient()" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                          <button v-if="data.action=='edit'" type="submit" @click="updateTypeClient()" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                          <button v-if="data.action=='add'" type="submit" @click="addLocation()" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                          <button v-if="data.action=='edit'" type="submit" @click="updateLocation()" class="btn btn-primary me-sm-3 me-1">Submit</button>
                           <button
                             type="button"
                             class="btn btn-label-secondary"
@@ -39,48 +42,51 @@
   <!--/ Edit User Modal -->
   
     <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="py-3 mb-2"><span class="text-muted fw-light">Gestion de production /</span> Les Type des clients</h4>
+            <h4 class="py-3 mb-2"><span class="text-muted fw-light">Gestion de production /</span> Les Locations</h4>
             <div class="app-ecommerce-category">
                 <!-- Category List Table -->
                 <div class="card">
-                    <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addTypeClient" data-bs-target="#editUser">Ajouter type de client</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher type des clients...">
+                    <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addLocation" data-bs-target="#editUser">Ajouter Location</button>
+                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Locations...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
                             <thead>
                             <tr style="background-color: #051922;">
-                                <th>Libellé</th>
-                                <th>Remise</th>
-                                <th>Action</th>
+                                <th>Code</th>
+                                <th>Constituant</th>
+                                <th>Unité</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                         
                             <tbody class="table-border-bottom-0">
                             
-                            <tr v-for="type_client in data.data_type_clients.data" :key="type_client.id" >
-                                <td>{{ type_client.libelle }}</td>
-                                <td>{{ type_client.remise }}</td>
+                            <tr v-for="location in data.data_locations.data" :key="location.id" >
+                                <td>{{ location.code }}</td>
+                                <td>{{ location.constituant }}</td>
+                                <td>{{ location.unite.libelle }}</td>
+                                
                                 <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                    <i class="ti ti-dots-vertical"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                    <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateTypeClient(type_client)" data-bs-target="#editUser" href="javascript:void(0);">
-                                        <i class="ti ti-pencil me-1"></i> Edit
-                                    </a>
-                                    <a class="dropdown-item" @click="deleteTypeClient(type_client)" href="javascript:void(0);"
-                                        ><i class="ti ti-trash me-1"></i> Delete</a>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                        <i class="ti ti-dots-vertical"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                        <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateLocation(location)" data-bs-target="#editUser" href="javascript:void(0);">
+                                            <i class="ti ti-pencil me-1"></i> Edit
+                                        </a>
+                                        <a class="dropdown-item" @click="deleteLocation(location)" href="javascript:void(0);"
+                                            ><i class="ti ti-trash me-1"></i> Delete</a>
+                                        </div>
                                     </div>
-                                </div>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <Bootstrap5Pagination
-                        :data="data.data_type_clients"
+                        :data="data.data_locations"
                         @pagination-change-page="fetch_data" style="margin: 16px;justify-content: center !important;"
                     />
                 </div>
@@ -101,53 +107,74 @@
     const store = useAuthStore();
     
     const data = reactive({
-      data_type_clients: [],
+      data_locations: [],
+      data_unites: [],
       searchQuery: '',
-      type_client: {
+      location: {
         id: '',
-        libelle: '',
-        remise: '',
+        code: '',
+        constituant: '',
+        unite_id: '',
       },
       loading:true,
       action:'',
     });
     
-    const open_modal_addTypeClient = () =>{
+    const open_modal_addLocation = () =>{
         data.action='add';
-        data.type_client.id= '';
-        data.type_client.remise= '';
-        data.type_client.libelle= '';
+        data.location.id= '';
+        data.location.code= '';
+        data.location.constituant= '';
+        data.location.unite_id= '';
     }
-    const open_modal_updateTypeClient = (type_client) =>{
+    const open_modal_updateLocation = (location) =>{
         data.action='edit';
-        data.type_client.id= type_client.id;
-        data.type_client.remise= type_client.remise;
-        data.type_client.libelle= type_client.libelle;
+        data.location.id= location.id;
+        data.location.code= location.code;
+        data.location.constituant= location.constituant;
+        data.location.unite_id= location.unite_id;
+      
     }
     
+    const fetch_data_unites = async () => {
+      data.data_unites=[];
+      try {
+        const response = await axios.get('/api/unites/index');
+        if(response.data.exist){
+          data.data_unites=response.data.unites;
+        } 
+      } catch (error) {
+          Swal.fire({
+                icon: 'error',
+                title: 'Unites...',
+                text: error,
+              });
+      }
+    };
+
     const fetch_data = async (page = 1) => {
-      data.data_type_clients=[];
+      data.data_locations=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/type_clients/index?page='+page,{
+        const response = await axios.get('/api/locations/index?page='+page,{
           params: {
             search: data.searchQuery
           }
         });
         if(response.data.exist){
-          data.data_type_clients=response.data.type_clients;
+          data.data_locations=response.data.locations;
         } 
         else {
           Swal.fire({
               icon: 'error',
-              title: 'Type Clients...',
+              title: 'Locations...',
               text: response.data.message,
             });
         }
       } catch (error) {
           Swal.fire({
                 icon: 'error',
-                title: 'Type Clients...',
+                title: 'Locations...',
                 text: error,
               });
       }
@@ -158,22 +185,22 @@
     };
     
   
-    const addTypeClient = async () => {
+    const addLocation = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/type_clients/store', data.type_client);
+        const response = await axios.post('/api/locations/store', data.location);
         if(response.data.success){
           fetch_data();
           Swal.fire({
             icon: 'success',
-            title: 'Type client...',
-            text: "Type client '"+ response.data.client+"' added",
+            title: 'Locations...',
+            text: "location '"+ response.data.location+"' added",
           });
         }
         else{
           Swal.fire({
             icon: 'error',
-            title: 'Type client...',
+            title: 'Locations...',
             text: response.data.message,
           });
         }
@@ -182,11 +209,11 @@
       }
     }
   
-    const deleteTypeClient = async (type_client) => {
+    const deleteLocation = async (location) => {
       try {
           Swal.fire({
             title: 'Confirm Delete',
-            text: `Are you sure you want to delete the type of client '${type_client.libelle}'?`,
+            text: `Are you sure you want to delete the location '${location.constituant}'?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Yes, delete it!',
@@ -194,19 +221,19 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/type_clients/destroy/"+type_client.id);
+                const response = await axios.delete("/api/locations/destroy/"+location.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
                     icon: 'success',
-                    title: 'Type clients...',
+                    title: 'Locations...',
                     text: response.data.message,
                   });
                 }
                 else{
                   Swal.fire({
                     icon: 'error',
-                    title: 'Type clients...',
+                    title: 'Locations...',
                     text: response.data.message,
                   });
                 }
@@ -217,21 +244,21 @@
       }
     }
   
-    const updateTypeClient = async () => {
+    const updateLocation = async () => {
       try {
-        const response = await axios.put("/api/type_clients/update/"+data.type_client.id,data.type_client);
+        const response = await axios.put("/api/locations/update/"+data.location.id,data.location);
         if(response.data.success){
           fetch_data();
           Swal.fire({
             icon: 'success',
-            title: 'Type clients...',
+            title: 'Locations...',
             text: response.data.message,
           });
         }
         else{
           Swal.fire({
             icon: 'error',
-            title: 'Type clients...',
+            title: 'Locations...',
             text: response.data.message,
           });
         }
@@ -243,6 +270,7 @@
   
     onMounted(()=>{
         fetch_data();
+        fetch_data_unites();
     }); 
   </script>
   <style>
