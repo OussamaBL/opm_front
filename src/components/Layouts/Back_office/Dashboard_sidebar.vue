@@ -4,7 +4,7 @@
     <div class="app-brand demo">
       <h3 style="margin-top: 14px;">
         <img src="/images/logo.png" style="width: 107px;height: 83px;" alt="">
-       </h3>
+      </h3>
       <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
         <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
         <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
@@ -36,12 +36,12 @@
         <ul class="menu-sub">
           <li class="menu-item">
             <router-link to="/ProductionDashboard" class="menu-link">
-                <div data-i18n="Tableau de bord">Tableau de bord</div>
+              <div data-i18n="Tableau de bord">Tableau de bord</div>
             </router-link>
           </li>
           <li class="menu-item">
             <router-link to="/GsAffaires" class="menu-link">
-                <div data-i18n="Les Affaires">Les Affaires</div>
+              <div data-i18n="Les Affaires">Les Affaires</div>
             </router-link>
           </li>
 
@@ -51,7 +51,7 @@
               <div data-i18n="Suivi / Pointage">Suivi / Pointage</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
+              <li class="menu-item">
                 <router-link to="/Clients" class="menu-link">
                   <div data-i18n="Les Produits finis">Les Produits finis</div>
                 </router-link>
@@ -86,7 +86,7 @@
                   <div data-i18n="Les location">Les location</div>
                 </router-link>
               </li>
-              
+
               <!-- Nested submenu example -->
               <!-- <li class="menu-item has-sub">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -114,7 +114,7 @@
               <div data-i18n="Les Analyses">Les Analyses</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
+              <li class="menu-item">
                 <router-link to="/ProductionDashboard" class="menu-link">
                   <div data-i18n="Récapitulatif BDP">Récapitulatif BDP</div>
                 </router-link>
@@ -195,14 +195,112 @@
           <div data-i18n="Les types des produits">Les types des produits</div>
         </router-link>
       </li>
-      
+
       <li class="menu-item">
         <router-link to="/Type_produits" class="menu-link">
           <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
           <div data-i18n="Listes des produits fini">Listes des produits fini</div>
         </router-link>
       </li>
+
+      <!-- gestion de stock -->
+      <li class="menu-item has-sub">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons fa fa-cogs" aria-hidden="true"></i>
+          <div data-i18n="Gestion de production">Gestion des Stock</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <router-link to="/ProductionDashboard" class="menu-link">
+              <div data-i18n="Tableau de bord">Tableau de bord</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/Depots" class="menu-link">
+              <div data-i18n="Depots">Depots</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/Provenances" class="menu-link">
+              <div data-i18n="Provenances">Provenances</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/Destinations" class="menu-link">
+              <div data-i18n="Destinations">Destinations</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/MouvementStocks" class="menu-link">
+              <div data-i18n="Les Mouvement de stock">Les Mouvement de stock</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/Transferts" class="menu-link">
+              <div data-i18n="Transferte">Transferte</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/Inventaires" class="menu-link">
+              <div data-i18n="Inventaires">Inventaires</div>
+            </router-link>
+          </li>
+          
+
+          <!-- Les Analyses -->
+          <li class="menu-item has-sub">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <div data-i18n="Les Analyses">Les Analyses</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Mouvements achats/ventes">Mouvements achats/ventes</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Inventaire">Inventaire</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Stock des constituants du jour">Stock des constituants du jour</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Stouck des constituants du jour par affaire">Stouck des constituants du jour par affaire</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Stock des PFI du jour par affaire">Stock des PFI du jour par affaire</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Cout du stock des constituants par affire">Cout du stock des constituants par affire</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Cout du stock des produits finis par affiaire">Cout du stock des produits finis par affiaire</div>
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link to="/ProductionDashboard" class="menu-link">
+                  <div data-i18n="Rupture de stock">Rupture de stock</div>
+                </router-link>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+
     </ul>
+
   </aside>
   <!-- / Menu -->
 </template>
@@ -230,29 +328,35 @@ export default {
 };
 </script>
 <style scoped>
-.bg-menu-theme .menu-inner .menu-item.open > .menu-link.menu-toggle, 
-.layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item.open > .menu-link.menu-toggle, 
-.bg-menu-theme .menu-inner .menu-item.active > .menu-link.menu-toggle, 
-.layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item.active > .menu-link.menu-toggle {
+.bg-menu-theme .menu-inner .menu-item.open>.menu-link.menu-toggle,
+.layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item.open>.menu-link.menu-toggle,
+.bg-menu-theme .menu-inner .menu-item.active>.menu-link.menu-toggle,
+.layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item.active>.menu-link.menu-toggle {
   background-color: #bf7422;
 }
+
 .menu-vertical .menu-inner {
   background-color: #051922;
 }
-.menu-vertical .menu-inner > .menu-item .menu-link {
+
+.menu-vertical .menu-inner>.menu-item .menu-link {
   color: white;
 }
-html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item:not(.active) > .menu-link:hover, 
-.layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item:not(.active) > .menu-link:hover {
+
+html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item:not(.active)>.menu-link:hover,
+.layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item:not(.active)>.menu-link:hover {
   background: #bf7422;
 }
+
 .menu-icon {
   font-size: 18px;
 }
+
 .menu-sub {
   display: none;
 }
-.menu-item.has-sub.open > .menu-sub {
+
+.menu-item.has-sub.open>.menu-sub {
   display: block;
 }
 </style>
