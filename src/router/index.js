@@ -7,12 +7,13 @@ import UserProfile from "@/components/Dashboard/UserProfile.vue";
 import GsAffaires from "@/components/Gs_production/GsAffaires.vue";
 import Type_produits from "@/components/Gs_production/Type_produits.vue";
 import Gs_unites from "@/components/Gs_production/GsUnites.vue";
-import Depots from "@/components/Gs_stock/Depots.vue";
-import Provenances from "@/components/Gs_stock/Provenances.vue";
-import Destinations from "@/components/Gs_stock/Destinations.vue";
-import Transferts from "@/components/Gs_stock/Transferts.vue";
-import Inventaires from "@/components/Gs_stock/Inventaires.vue";
-import MouvementStocks from "@/components/Gs_stock/MouvementStocks.vue";
+import GsDepot from "@/components/Gs_stock/GsDepot.vue";
+import GsProvenance from "@/components/Gs_stock/GsProvenance.vue";
+import GsDestination from "@/components/Gs_stock/GsDestination.vue";
+import GsDocument from "@/components/Gs_stock/GsDocument.vue";
+import GsTransfert from "@/components/Gs_stock/GsTransfert.vue";
+import GsInventaire from "@/components/Gs_stock/GsInventaire.vue";
+import MouvementStock from "@/components/Gs_stock/MouvementStocks.vue";
 
 
 // import { useAuthStore } from '@/stores/useAuthStore.js';
@@ -72,32 +73,37 @@ const router = createRouter({
               {
                 path: '/Depots',
                 name: 'Depots',
-                component:  Depots,
+                component:  GsDepot,
+              },
+              {
+                path: '/Documents',
+                name: 'Documents',
+                component:  GsDocument,
               },
               {
                 path: '/Provenances',
                 name: 'Provenances',
-                component:  Provenances,
+                component:  GsProvenance,
               },
               {
                 path: '/Destinations',
                 name: 'Destinations',
-                component:  Destinations,
+                component:  GsDestination,
               },
               {
                 path: '/MouvementStocks',
                 name: 'MouvementStocks',
-                component:  MouvementStocks,
+                component:  MouvementStock,
               },
               {
                 path: '/Transferts',
                 name: 'Transferts',
-                component:  Transferts,
+                component:  GsTransfert,
               },
               {
                 path: '/Inventaires',
                 name: 'Inventaires',
-                component:  Inventaires,
+                component:  GsInventaire,
               },
               
             ],

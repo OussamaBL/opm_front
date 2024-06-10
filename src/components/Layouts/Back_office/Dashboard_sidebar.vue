@@ -221,6 +221,11 @@
             </router-link>
           </li>
           <li class="menu-item">
+            <router-link to="/Documents" class="menu-link">
+              <div data-i18n="Documents">Documents</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
             <router-link to="/Provenances" class="menu-link">
               <div data-i18n="Provenances">Provenances</div>
             </router-link>
