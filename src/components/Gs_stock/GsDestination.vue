@@ -5,30 +5,61 @@
     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
       <div class="modal-content p-3 p-md-5">
         <div class="modal-body">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
           <div class="text-center mb-4">
             <h3 class="mb-2">Destination</h3>
           </div>
           <form id="editUserForm" class="row g-3" onsubmit="return false">
-
-            <div class="col-12 col-md-6" style="margin: 0 auto;">
+            <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserCode">Code</label>
-              <input type="text" id="modalEditUserCode" v-model="data.destination.code" class="form-control"
-                placeholder="Saisie la date d code" />
+              <input
+                type="text"
+                id="modalEditUserCode"
+                v-model="data.destination.code"
+                class="form-control"
+                placeholder="Saisie la date d code"
+              />
             </div>
 
-            <div class="col-12 col-md-6" style="margin: 0 auto;">
+            <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserLibelle">Libelle</label>
-              <input type="text" id="modalEditUserLibelle" v-model="data.destination.libelle" class="form-control"
-                placeholder="Saisie la date d libelle" />
+              <input
+                type="text"
+                id="modalEditUserLibelle"
+                v-model="data.destination.libelle"
+                class="form-control"
+                placeholder="Saisie la date d libelle"
+              />
             </div>
 
             <div class="col-12 text-center">
-              <button v-if="data.action == 'add'" type="submit" @click="addDestination"
-                class="btn btn-primary me-sm-3 me-1">Submit</button>
-              <button v-if="data.action == 'edit'" type="submit" @click="updateDestination"
-                class="btn btn-primary me-sm-3 me-1">Submit</button>
-              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">
+              <button
+                v-if="data.action == 'add'"
+                type="submit"
+                @click="addDestination"
+                class="btn btn-primary me-sm-3 me-1"
+              >
+                Submit
+              </button>
+              <button
+                v-if="data.action == 'edit'"
+                type="submit"
+                @click="updateDestination"
+                class="btn btn-primary me-sm-3 me-1"
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                class="btn btn-label-secondary"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
                 Cancel
               </button>
             </div>
@@ -40,20 +71,39 @@
   <!--/ Edit User Modal -->
 
   <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="py-3 mb-2"><span class="text-muted fw-light">Gestion de Stock /</span> Destinations</h4>
+    <h4 class="py-3 mb-2">
+      <span class="text-muted fw-light">Gestion de Stock /</span> Destinations
+    </h4>
     <div class="app-ecommerce-category">
       <!-- Category List Table -->
       <div class="card">
-        <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal"
-          @click="open_modal_addDestination" data-bs-target="#editUser">Ajouter Destination</button>
-        <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;"
-          placeholder="Rechercher Destination...">
+        <button
+          class="btn btn-primary"
+          style="width: 170px; margin: 12px"
+          data-bs-toggle="modal"
+          @click="open_modal_addDestination"
+          data-bs-target="#editUser"
+        >
+          Ajouter Destination
+        </button>
+        <input
+          type="text"
+          v-model="data.searchQuery"
+          @keyup="fetch_data"
+          class="form-control m-3"
+          style="width: 96%"
+          placeholder="Rechercher Destination..."
+        />
         <div class="table-responsive text-nowrap">
-          <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;"
-            alt="Loading">
+          <img
+            v-if="data.loading"
+            src="/images/loading.gif"
+            style="width: 40px; margin: 20px auto; display: block"
+            alt="Loading"
+          />
           <table v-if="!data.loading" class="table">
             <thead>
-              <tr style="background-color: #051922;">
+              <tr style="background-color: #051922">
                 <th>Code</th>
                 <th>Libelle</th>
                 <th>Action</th>
@@ -61,22 +111,34 @@
             </thead>
 
             <tbody class="table-border-bottom-0">
-
-              <tr v-for="destination in data.data_destinations.data" :key="destination.id">
+              <tr v-for="destination in data.data_destinations" :key="destination.id">
                 <td>{{ destination.code }}</td>
                 <td>{{ destination.libelle }}</td>
                 <td>
                   <div class="dropdown">
-                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <button
+                      type="button"
+                      class="btn p-0 dropdown-toggle hide-arrow"
+                      data-bs-toggle="dropdown"
+                    >
                       <i class="ti ti-dots-vertical"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateDestination(destination)"
-                        data-bs-target="#editUser" href="javascript:void(0);">
+                      <a
+                        class="dropdown-item"
+                        data-bs-toggle="modal"
+                        @click="open_modal_updateDestination(destination)"
+                        data-bs-target="#editUser"
+                        href="javascript:void(0);"
+                      >
                         <i class="ti ti-pencil me-1"></i> Edit
                       </a>
-                      <a class="dropdown-item" @click="deleteDestination(destination)" href="javascript:void(0);"><i
-                          class="ti ti-trash me-1"></i> Delete</a>
+                      <a
+                        class="dropdown-item"
+                        @click="deleteDestination(destination)"
+                        href="javascript:void(0);"
+                        ><i class="ti ti-trash me-1"></i> Delete</a
+                      >
                     </div>
                   </div>
                 </td>
@@ -84,8 +146,11 @@
             </tbody>
           </table>
         </div>
-        <Bootstrap5Pagination :data="data.data_destinations" @pagination-change-page="fetch_data"
-          style="margin: 16px;justify-content: center !important;" />
+        <Bootstrap5Pagination
+          :data="data.data_destinations"
+          @pagination-change-page="fetch_data"
+          style="margin: 16px; justify-content: center !important"
+        />
       </div>
     </div>
   </div>
@@ -94,11 +159,11 @@
 
 <script setup>
 import { reactive, onMounted } from "vue";
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import axios from "axios";
+import Swal from "sweetalert2";
 // import router from '@/router';
-import { useAuthStore } from '@/stores/useAuthStore.js';
-import { Bootstrap5Pagination } from 'laravel-vue-pagination';
+import { useAuthStore } from "@/stores/useAuthStore.js";
+import { Bootstrap5Pagination } from "laravel-vue-pagination";
 
 const store = useAuthStore();
 
@@ -106,142 +171,175 @@ const data = reactive({
   data_destinations: [],
 
   destination: {
-    id: '',
-    code: '',
-    libelle: '',
+    id: "",
+    code: "",
+    libelle: "",
   },
   loading: true,
-  action: '',
+  action: "",
 });
 
 const open_modal_addDestination = () => {
-  data.action = 'add';
-  data.destination.id = '';
-  data.destination.code = '';
-  data.destination.libelle = '';
-}
+  data.action = "add";
+  data.destination.id = "";
+  data.destination.code = "";
+  data.destination.libelle = "";
+};
 
 const open_modal_updateDestination = (destination) => {
-  data.action = 'edit';
+  data.action = "edit";
   data.destination.id = destination.id;
   data.destination.code = destination.code;
   data.destination.libelle = destination.libelle;
-}
+};
 
 const fetch_data = async (page = 1) => {
   data.data_destinations = [];
   data.loading = true;
   try {
-    const response = await axios.get('/api/destination/index?page=' + page, {
-      params: {
-        search: data.searchQuery
+    const response = await axios.get(
+      "http://127.0.0.1:8000/api/destinations?page=" + page,
+      {
+        params: {
+          search: data.searchQuery,
+        },
       }
-    });
-    if (response.data.exist) {
-      data.data_destinations = response.data.destinations;
-    }
-    else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Destination...',
-        text: response.data.message,
-      });
-    }
+    );
+    data.data_destinations = response.data.destinations;
   } catch (error) {
     Swal.fire({
-      icon: 'error',
-      title: 'Destination...',
+      icon: "error",
+      title: "Destination...",
       text: error.message,
     });
-  }
-  finally {
+  } finally {
     data.loading = false;
   }
-
 };
 
 const addDestination = async () => {
   store.clearErrors();
   try {
-    const response = await axios.post('/api/destination/store', data.destination);
-    if (response.data.success) {
-      fetch_data();
+    const response = await axios.post(
+      "http://127.0.0.1:8000/api/destinations",
+      data.destination
+    );
+
+    if (response.status === 200) {
+      data.data_destinations.push(response.data.destination);
       Swal.fire({
-        icon: 'success',
-        title: 'Destination...',
-        text: "Destination '" + response.data.destination + "' added",
+        icon: "success",
+        title: "Destination...",
+        text: response.data.message,
       });
+
+      document.querySelector("#editUser .btn-close").click();
     }
-    else {
+  } catch (error) {
+    if (error.response && error.response.status === 422) {
+      const errors = error.response.data.errors;
+      let errorMessage = "";
+
+      Object.keys(errors).forEach(function (key) {
+        errors[key].forEach(function (errorDetail) {
+          errorMessage += `${errorDetail}\n`;
+        });
+      });
+
       Swal.fire({
-        icon: 'error',
-        title: 'Destination...',
+        icon: "error",
+        title: "Validation Errors",
+        text: errorMessage,
+      });
+    } else {
+      console.error("An unexpected error occurred", error);
+    }
+  }
+};
+
+const updateDestination = async () => {
+  try {
+    const response = await axios.put(
+      `http://127.0.0.1:8000/api/destinations/${data.destination.id}`,
+      data.destination
+    );
+
+    if (response.status === 200) {
+      data.data_destinations = data.data_destinations.map((destination) =>
+        destination.id === data.destination.id ? response.data.destination : destination
+      );
+      Swal.fire({
+        icon: "success",
+        title: "Destination...",
+        text: response.data.message,
+      });
+
+      document.querySelector("#editUser .btn-close").click();
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Destination...",
         text: response.data.message,
       });
     }
   } catch (error) {
-    store.setErrors(error.response.data.errors);
+    if (error.response && error.response.status === 422) {
+      const errors = error.response.data.errors;
+      let errorMessage = "";
+
+      Object.keys(errors).forEach(function (key) {
+        errors[key].forEach(function (errorDetail) {
+          errorMessage += `${errorDetail}\n`;
+        });
+      });
+
+      Swal.fire({
+        icon: "error",
+        title: "Validation Errors",
+        text: errorMessage,
+      });
+    } else {
+      console.error("An unexpected error occurred", error);
+    }
   }
-}
+};
 
 const deleteDestination = async (destination) => {
   try {
     Swal.fire({
-      title: 'Confirm Delete',
+      title: "Confirm Delete",
       text: `Are you sure you want to delete the destination '${destination.libelle}'?`,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'Cancel',
-    })
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          const response = await axios.delete("/api/destination/destroy/" + destination.id);
-          if (response.data.success) {
-            fetch_data();
-            Swal.fire({
-              icon: 'success',
-              title: 'Destination...',
-              text: response.data.message,
-            });
-          }
-          else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Destination...',
-              text: response.data.message,
-            });
-          }
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await axios.delete(
+          `http://127.0.0.1:8000/api/destinations/${destination.id}`
+        );
+        if (response.status === 204) {
+          data.data_destinations = data.data_destinations.filter(
+            (d) => d.id !== destination.id
+          );
+          Swal.fire({
+            icon: "success",
+            title: "destination...",
+            text: response.data.message,
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "destination...",
+            text: response.data.message,
+          });
         }
-      });
+      }
+    });
   } catch (error) {
     store.setErrors(error.response.data.errors);
   }
-}
-
-const updateDestination = async () => {
-  try {
-    const response = await axios.put("/api/destination/update/" + data.destination.id, data.destination);
-    if (response.data.success) {
-      fetch_data();
-      Swal.fire({
-        icon: 'success',
-        title: 'Destination...',
-        text: response.data.message,
-      });
-    }
-    else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Destination...',
-        text: response.data.message,
-      });
-    }
-  }
-  catch (error) {
-    store.setErrors(error.response.data.errors);
-  }
-}
+};
 
 onMounted(() => {
   fetch_data();
