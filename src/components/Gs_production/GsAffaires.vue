@@ -195,33 +195,33 @@
     
     const open_modal_addAffaire = () =>{
         data.action='add';
-        data.affaire.num_affaire= '',
-        data.affaire.affaire= '',
-        data.affaire.objet= '',
-        data.affaire.client_id= '', 
-        data.affaire.montant_devis= '',
-        data.affaire.montant_definitif_ttc= '',
-        data.affaire.date_debut_contrat= '',
-        data.affaire.delai_contrat= '',
-        data.affaire.duree_arret= '',
-        data.affaire.date_fin_contrat= '',
-        data.affaire.date_offre= '',
-        data.affaire.status= ''
+        data.affaire.num_affaire= '';
+        data.affaire.affaire= '';
+        data.affaire.objet= '';
+        data.affaire.client_id= ''; 
+        data.affaire.montant_devis= '';
+        data.affaire.montant_definitif_ttc= '';
+        data.affaire.date_debut_contrat= '';
+        data.affaire.delai_contrat= '';
+        data.affaire.duree_arret= '';
+        data.affaire.date_fin_contrat= '';
+        data.affaire.date_offre= '';
+        data.affaire.status= '';
     }
     const open_modal_updateAffaire = (affaire) =>{
         data.action='edit';
-        data.affaire.num_affaire= affaire.num_affaire,
-        data.affaire.affaire= affaire.affaire,
-        data.affaire.objet= affaire.objet,
-        data.affaire.client_id= affaire.client_id, 
-        data.affaire.montant_devis= affaire.montant_devis,
-        data.affaire.montant_definitif_ttc= affaire.montant_definitif_ttc,
-        data.affaire.date_debut_contrat= affaire.date_debut_contrat,
-        data.affaire.delai_contrat= affaire.delai_contrat,
-        data.affaire.duree_arret= affaire.duree_arret,
-        data.affaire.date_fin_contrat= affaire.date_fin_contrat,
-        data.affaire.date_offre= affaire.date_offre,
-        data.affaire.status= affaire.status
+        data.affaire.num_affaire= affaire.num_affaire;
+        data.affaire.affaire= affaire.affaire;
+        data.affaire.objet= affaire.objet;
+        data.affaire.client_id= affaire.client_id; 
+        data.affaire.montant_devis= affaire.montant_devis;
+        data.affaire.montant_definitif_ttc= affaire.montant_definitif_ttc;
+        data.affaire.date_debut_contrat= affaire.date_debut_contrat;
+        data.affaire.delai_contrat= affaire.delai_contrat;
+        data.affaire.duree_arret= affaire.duree_arret;
+        data.affaire.date_fin_contrat= affaire.date_fin_contrat;
+        data.affaire.date_offre= affaire.date_offre;
+        data.affaire.status= affaire.status;
     }
     
     const fetch_data_clients = async () => {

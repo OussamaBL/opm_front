@@ -52,7 +52,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
+                <router-link to="/Pointage/Produits_fini" class="menu-link">
                   <div data-i18n="Les Produits finis">Les Produits finis</div>
                 </router-link>
               </li>

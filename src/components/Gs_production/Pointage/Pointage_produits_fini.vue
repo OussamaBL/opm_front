@@ -12,6 +12,13 @@
                       
                       <form id="editUserForm" class="row g-3" onsubmit="return false">
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
+                          <label class="form-label" for="modalEditUserFirstName">Affaire</label>
+                            <select id="modalEditUserCountry" class="select2 form-select" v-model="data.affaire_produit.affaire_id" data-allow-clear="true">
+                                <option value="">Select</option>
+                                <option v-for="affaire in data.data_affaires" :key="affaire.id" :value="affaire.id">{{ affaire.affaire }}</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-6" style="margin: 0 auto;">
                           <label class="form-label" for="modalEditUserFirstName">Produits finis</label>
                             <select id="modalEditUserCountry" class="select2 form-select" v-model="data.affaire_produit.produit_fini_id" data-allow-clear="true">
                                 <option value="">Select</option>
@@ -49,6 +56,11 @@
             <div class="app-ecommerce-category">
                 <!-- Category List Table -->
                 <div class="card">
+                    <label for="" style="margin: 16px 0px 0px 17px;"><strong>Affaire</strong></label>
+                    <select id="modalEditUserCountry" class="select2 form-select m-3" style="width: 96%;" v-model="data.affaire_id" data-allow-clear="true">
+                        <option value="all">All</option>
+                        <option v-for="affaire in data.data_affaires" :key="affaire.id" :value="affaire.id">{{ affaire.affaire }}</option>
+                    </select>
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addAffaire_Produit" data-bs-target="#editUser">Ajouter</button>
                     <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des produits...">
                     <div class="table-responsive text-nowrap">
@@ -82,7 +94,7 @@
                                     <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateAffaire_Produit(affaire_produit)" data-bs-target="#editUser" href="javascript:void(0);">
                                         <i class="ti ti-pencil me-1"></i> Edit  
                                     </a>
-                                    <a class="dropdown-item" @click="deleteAffaire(affaire_produit)" href="javascript:void(0);"
+                                    <a class="dropdown-item" @click="deleteAffaire_Produit(affaire_produit)" href="javascript:void(0);"
                                         ><i class="ti ti-trash me-1"></i> Delete</a>
                                     </div>
                                 </div>
@@ -92,7 +104,7 @@
                         </table>
                     </div>
                     <Bootstrap5Pagination
-                        :data="data.data_affaires"
+                        :data="data.data_affaire_produits"
                         @pagination-change-page="fetch_data" style="margin: 16px;justify-content: center !important;"
                     />
                 </div>
@@ -103,7 +115,7 @@
             <!-- / Content -->
   </template>
   <script setup>
-    import { reactive,onMounted } from "vue";
+    import { reactive,onMounted,watch  } from "vue";
     import axios from 'axios';
     import Swal from 'sweetalert2';
     // import router from '@/router';
@@ -113,98 +125,93 @@
     const store = useAuthStore();
     
     const data = reactive({
+      data_affaire_produits: [],
       data_affaires: [],
-      data_clients: [],
+      data_produits: [],
+      affaire_id : '',
       searchQuery: '',
-      affaire: {
+      affaire_produit: {
         id: '',
-        num_affaire: '',
-        affaire: '',
-        objet: '',
-        id_client: '',
-        montant_devis: '',
-        montant_definitif_ttc: '',
-        date_debut_contrat: '',
-        delai_contrat: '',
-        duree_arret: '',
-        date_fin_contrat: '',
-        date_offre: '',
-        status: '',
+        affaire_id: '',
+        produit_fini_id: '',
+        quantite: '',
       },
       loading:true,
       action:'',
     });
     
-    const open_modal_addAffaire = () =>{
+    const open_modal_addAffaire_Produit = () =>{
         data.action='add';
-        data.affaire.num_affaire= '',
-        data.affaire.affaire= '',
-        data.affaire.objet= '',
-        data.affaire.id_client= '', 
-        data.affaire.montant_devis= '',
-        data.affaire.montant_definitif_ttc= '',
-        data.affaire.date_debut_contrat= '',
-        data.affaire.delai_contrat= '',
-        data.affaire.duree_arret= '',
-        data.affaire.date_fin_contrat= '',
-        data.affaire.date_offre= '',
-        data.affaire.status= ''
-    }
-    const open_modal_updateAffaire = (affaire) =>{
+        data.affaire_produit.id= '';
+        data.affaire_produit.affaire_id= '';
+        data.affaire_produit.produit_fini_id= '';
+        data.affaire_produit.quantite= ''; 
+    };
+
+    const open_modal_updateAffaire_Produit = (affaire_produit) =>{
         data.action='edit';
-        data.affaire.num_affaire= affaire.num_affaire,
-        data.affaire.affaire= affaire.affaire,
-        data.affaire.objet= affaire.objet,
-        data.affaire.id_client= affaire.id_client, 
-        data.affaire.montant_devis= affaire.montant_devis,
-        data.affaire.montant_definitif_ttc= affaire.montant_definitif_ttc,
-        data.affaire.date_debut_contrat= affaire.date_debut_contrat,
-        data.affaire.delai_contrat= affaire.delai_contrat,
-        data.affaire.duree_arret= affaire.duree_arret,
-        data.affaire.date_fin_contrat= affaire.date_fin_contrat,
-        data.affaire.date_offre= affaire.date_offre,
-        data.affaire.status= affaire.status
-    }
+        data.affaire_produit.id= affaire_produit.id;
+        data.affaire_produit.affaire_id= affaire_produit.affaire_id;
+        data.affaire_produit.produit_fini_id= affaire_produit.produit_fini_id;
+        data.affaire_produit.quantite= affaire_produit.quantite; 
+    };
     
-    const fetch_data_clients = async () => {
-      data.data_clients=[];
+    const fetch_data_produits = async () => {
+      data.data_produits=[];
       try {
-        const response = await axios.get('/api/clients/index');
+        const response = await axios.get('/api/produits/index');
         if(response.data.exist){
-          data.data_clients=response.data.clients;
+          data.data_produits=response.data.produits;
         } 
       } catch (error) {
           Swal.fire({
                 icon: 'error',
-                title: 'Clients...',
+                title: 'Produits...',
+                text: error,
+              });
+      }
+    };
+
+    const fetch_data_affaires = async () => {
+      data.data_affaires=[];
+      try {
+        const response = await axios.get('/api/affaires/index');
+        if(response.data.exist){
+          data.data_affaires=response.data.affaires;
+        } 
+      } catch (error) {
+          Swal.fire({
+                icon: 'error',
+                title: 'Affaires...',
                 text: error,
               });
       }
     };
 
     const fetch_data = async (page = 1) => {
-      data.data_affaires=[];
+      data.data_affaire_produits=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/affaires/index?page='+page,{
+        const response = await axios.get('/api/affaire_produits/index?page='+page,{
           params: {
-            search: data.searchQuery
+            search: data.searchQuery,
+            affaire_id: data.affaire_id
           }
         });
         if(response.data.exist){
-          data.data_affaires=response.data.affaires;
+          data.data_affaire_produits=response.data.affaire_produits;
         } 
         else {
           Swal.fire({
               icon: 'error',
-              title: 'Affaires...',
+              title: 'Affaire Produits...',
               text: response.data.message,
             });
         }
       } catch (error) {
           Swal.fire({
                 icon: 'error',
-                title: 'Affaires...',
+                title: 'Affaire Produits...',
                 text: error,
               });
       }
@@ -214,23 +221,22 @@
       
     };
     
-  
-    const addAffaire = async () => {
+    const addAffaire_Produit = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/affaire/store', data.affaire);
+        const response = await axios.post('/api/affaire_produits/store', data.affaire_produit);
         if(response.data.success){
           fetch_data();
           Swal.fire({
             icon: 'success',
-            title: 'Affaires...',
-            text: "Affaire '"+ response.data.affaire+"' added",
+            title: 'Affaire Produits...',
+            text: "Produit '"+ response.data.produit+"' added",
           });
         }
         else{
           Swal.fire({
             icon: 'error',
-            title: 'Affaires...',
+            title: 'Affaire Produits...',
             text: response.data.message,
           });
         }
@@ -239,11 +245,11 @@
       }
     }
   
-    const deleteAffaire = async (affaire) => {
+    const deleteAffaire_Produit = async (affaire_produit) => {
       try {
           Swal.fire({
             title: 'Confirm Delete',
-            text: `Are you sure you want to delete the affaire '${affaire.affaire}'?`,
+            text: `Are you sure you want to delete the produit '${affaire_produit.produit.libelle}' from affaire ?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Yes, delete it!',
@@ -251,19 +257,19 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/affaire/destroy/"+affaire.id);
+                const response = await axios.delete("/api/affaire_produits/destroy/"+affaire_produit.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
                     icon: 'success',
-                    title: 'Affaires...',
+                    title: 'Affaire Produits...',
                     text: response.data.message,
                   });
                 }
                 else{
                   Swal.fire({
                     icon: 'error',
-                    title: 'Affaires...',
+                    title: 'Affaire Produits...',
                     text: response.data.message,
                   });
                 }
@@ -274,21 +280,21 @@
       }
     }
   
-    const updateAffaire = async () => {
+    const updateAffaire_Produit = async () => {
       try {
-        const response = await axios.put("/api/affaire/update/"+data.affaire.id,data.affaire);
+        const response = await axios.put("/api/affaire_produits/update/"+data.affaire_produit.id,data.affaire_produit);
         if(response.data.success){
           fetch_data();
           Swal.fire({
             icon: 'success',
-            title: 'Affaires...',
+            title: 'Affaire Produits...',
             text: response.data.message,
           });
         }
         else{
           Swal.fire({
             icon: 'error',
-            title: 'Affaires...',
+            title: 'Affaire Produits...',
             text: response.data.message,
           });
         }
@@ -297,12 +303,22 @@
         store.setErrors(error.response.data.errors);
       }
     }
+
+    // Watching for changes in affaire_id
+    watch(() => data.affaire_id, (newValue, oldValue) => {
+      if (newValue !== oldValue) {
+        fetch_data();
+      }
+    });
   
     onMounted(()=>{
         fetch_data();
-        fetch_data_clients();
+        fetch_data_affaires();
+        fetch_data_produits();
     }); 
+
   </script>
+  
   <style>
   div:where(.swal2-container) {
   z-index: 2000;

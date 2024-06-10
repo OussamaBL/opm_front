@@ -15,6 +15,8 @@ import Type_personnel from "@/components/Gs_personnel/Type_personnel.vue";
 import Type_clients from "@/components/Gs_production/Type_clients.vue";
 import GsClients from "@/components/Gs_production/GsClients.vue";
 
+import Pointage_ProduitsFini from "@/components/Gs_production/Pointage/Pointage_produits_fini.vue";
+
 // import { useAuthStore } from '@/stores/useAuthStore.js';
 
 
@@ -104,6 +106,11 @@ const router = createRouter({
                 path: '/GsClients',
                 name: 'GsClients',
                 component:  GsClients,
+              },
+              {
+                path: '/Pointage/Produits_fini',
+                name: 'Pointage_ProduitsFini',
+                component:  Pointage_ProduitsFini,
               },
               
             ],
