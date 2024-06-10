@@ -197,29 +197,29 @@
     };
 
     const fetch_data = async (page = 1) => {
-      data.data_affaire_locations=[];
+      data.data_affaire_machines=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/affaire_locations/index?page='+page,{
+        const response = await axios.get('/api/affaire_machines/index?page='+page,{
           params: {
             search: data.searchQuery,
             affaire_id: data.affaire_id
           }
         });
         if(response.data.exist){
-          data.data_affaire_locations=response.data.affaire_locations;
+          data.data_affaire_machines=response.data.affaire_machines;
         } 
         else {
           Swal.fire({
               icon: 'error',
-              title: 'Affaire Locations...',
+              title: 'Affaire machines...',
               text: response.data.message,
             });
         }
       } catch (error) {
           Swal.fire({
                 icon: 'error',
-                title: 'Affaire Locations...',
+                title: 'Affaire machines...',
                 text: error,
               });
       }
@@ -229,22 +229,22 @@
       
     };
     
-    const addAffaire_Location = async () => {
+    const addAffaire_Machine = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/affaire_locations/store', data.affaire_location);
+        const response = await axios.post('/api/affaire_machines/store', data.affaire_machine);
         if(response.data.success){
           fetch_data();
           Swal.fire({
             icon: 'success',
-            title: 'Affaire locations...',
-            text: "location '"+ response.data.location+"' added",
+            title: 'Affaire machines...',
+            text: "machine '"+ response.data.machine+"' added",
           });
         }
         else{
           Swal.fire({
             icon: 'error',
-            title: 'Affaire locations...',
+            title: 'Affaire machines...',
             text: response.data.message,
           });
         }
@@ -253,11 +253,11 @@
       }
     }
   
-    const deleteAffaire_Location = async (affaire_location) => {
+    const deleteAffaire_Machine = async (affaire_machine) => {
       try {
           Swal.fire({
             title: 'Confirm Delete',
-            text: `Are you sure you want to delete the location '${affaire_location.location.constituant}' from affaire ?`,
+            text: `Are you sure you want to delete the machine '${affaire_machine.machine.engin}' from affaire ?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Yes, delete it!',
@@ -265,19 +265,19 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/affaire_locations/destroy/"+affaire_location.id);
+                const response = await axios.delete("/api/affaire_machines/destroy/"+affaire_machine.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
                     icon: 'success',
-                    title: 'Affaire Locations...',
+                    title: 'Affaire machines...',
                     text: response.data.message,
                   });
                 }
                 else{
                   Swal.fire({
                     icon: 'error',
-                    title: 'Affaire Locations...',
+                    title: 'Affaire machines...',
                     text: response.data.message,
                   });
                 }
@@ -288,21 +288,21 @@
       }
     }
   
-    const updateAffaire_Location = async () => {
+    const updateAffaire_Machine = async () => {
       try {
-        const response = await axios.put("/api/affaire_locations/update/"+data.affaire_location.id,data.affaire_location);
+        const response = await axios.put("/api/affaire_machines/update/"+data.affaire_machine.id,data.affaire_machine);
         if(response.data.success){
           fetch_data();
           Swal.fire({
             icon: 'success',
-            title: 'Affaire locations...',
+            title: 'Affaire machines...',
             text: response.data.message,
           });
         }
         else{
           Swal.fire({
             icon: 'error',
-            title: 'Affaire locations...',
+            title: 'Affaire machines...',
             text: response.data.message,
           });
         }
@@ -322,7 +322,7 @@
     onMounted(()=>{
         fetch_data();
         fetch_data_affaires();
-        fetch_data_locations();
+        fetch_data_machines();
     }); 
 
   </script>
