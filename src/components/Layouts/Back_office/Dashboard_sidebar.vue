@@ -57,33 +57,33 @@
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
+                <router-link to="/Pointage/Fournitures" class="menu-link">
                   <div data-i18n="Les Fournitures">Les Fournitures</div>
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
+                <router-link to="/Pointage/Personnels" class="menu-link">
                   <div data-i18n="Pointage de personnel">Pointage de personnel</div>
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
+                <router-link to="/Pointage/Machines" class="menu-link">
                   <div data-i18n="Les Machines">Les Machines</div>
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
+                <router-link to="/Pointage/Sous_Traitances" class="menu-link">
                   <div data-i18n="Sous-traitance">Sous-traitance</div>
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
+                <router-link to="/Pointage/Transports" class="menu-link">
                   <div data-i18n="Les Transports">Les Transports</div>
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
-                  <div data-i18n="Les location">Les location</div>
+                <router-link to="/Pointage/Locations" class="menu-link">
+                  <div data-i18n="Les locations">Les locations</div>
                 </router-link>
               </li>
               
@@ -184,8 +184,8 @@
         </ul>
       </li>
 
-       <!-- Gestion de personnel -->
-       <li class="menu-item has-sub">
+      <!-- Gestion de personnel -->
+      <li class="menu-item has-sub">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons fa fa-cogs" aria-hidden="true"></i>
           <div data-i18n="Gestion de personnel">Gestion du personnel</div>
@@ -223,146 +223,31 @@
             </router-link>
           </li>
 
-          <!-- Suivi / Pointage -->
-          <li class="menu-item has-sub">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <div data-i18n="Suivi / Pointage">Suivi / Pointage</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
-                  <div data-i18n="Les Produits finis">Les Produits finis</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
-                  <div data-i18n="Les Fournitures">Les Fournitures</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
-                  <div data-i18n="Pointage de personnel">Pointage de personnel</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
-                  <div data-i18n="Les Machines">Les Machines</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
-                  <div data-i18n="Sous-traitance">Sous-traitance</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
-                  <div data-i18n="Les Transports">Les Transports</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/Clients" class="menu-link">
-                  <div data-i18n="Les location">Les location</div>
-                </router-link>
-              </li>
-              
-              <!-- Nested submenu example -->
-              <!-- <li class="menu-item has-sub">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                  <div data-i18n="Nested Submenu">Nested Submenu</div>
-                </a>
-                <ul class="menu-sub">
-                  <li class="menu-item">
-                    <router-link to="/NestedLink1" class="menu-link">
-                      <div data-i18n="Nested Link 1">Nested Link 1</div>
-                    </router-link>
-                  </li>
-                  <li class="menu-item">
-                    <router-link to="/NestedLink2" class="menu-link">
-                      <div data-i18n="Nested Link 2">Nested Link 2</div>
-                    </router-link>
-                  </li>
-                </ul>
-              </li> -->
-            </ul>
-          </li>
-
-          <!-- Les Analyses -->
-          <li class="menu-item has-sub">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <div data-i18n="Les Analyses">Les Analyses</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Récapitulatif BDP">Récapitulatif BDP</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Rendement">Rendement</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Consommation des constituants">Consommation des constituants</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Depenses">Depenses</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Recettes">Recettes</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Marge brute">Marge brute</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Résultat financier">Résultat financier</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Dépenses réelles par catégories">Dépenses réelles par catégories</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Planning des produits finis">Planning des produits finis</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Planning des contituant">Planning des contituant</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Rendement journalier">Rendement journalier</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Rendement total">Rendement total</div>
-                </router-link>
-              </li>
-              <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
-                  <div data-i18n="Consommation imprévue">Consommation imprévue</div>
-                </router-link>
-              </li>
-            </ul>
-          </li>
         </ul>
       </li>
 
-      
+      <!-- Gestion de Transports -->
+      <li class="menu-item has-sub">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons fa fa-cogs" aria-hidden="true"></i>
+          <div data-i18n="Gestion de personnel">Gestion du personnel</div>
+        </a>
+        <ul class="menu-sub">
+          
+          <li class="menu-item">
+            <router-link to="/GsEtude_Transport" class="menu-link">
+                <div data-i18n="Les Etudes transports">Les Etudes transports</div>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link to="/GsSuivi_Transport" class="menu-link">
+                <div data-i18n="Les Suivis transports">Les Suivis transports</div>
+            </router-link>
+          </li>
+
+        </ul>
+      </li>
+
       <li class="menu-item">
         <router-link to="/Gs_unites" class="menu-link">
           <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
@@ -392,6 +277,45 @@
         <router-link to="/GsClients" class="menu-link">
           <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
           <div data-i18n="Listes des clients">Listes des clients</div>
+        </router-link>
+      </li>
+
+      <li class="menu-item">
+        <router-link to="/GsFournisseurs" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Listes des Fournisseurs">Listes des Fournisseurs</div>
+        </router-link>
+      </li>
+      <li class="menu-item">
+        <router-link to="/GsFournitures" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Listes des Fournitures">Listes des Fournitures</div>
+        </router-link>
+      </li>
+
+      <li class="menu-item">
+        <router-link to="/GsClients" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Listes des clients">Listes des clients</div>
+        </router-link>
+      </li>
+
+      <li class="menu-item">
+        <router-link to="/GsFournitures" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Listes des Locations">Listes des Locations</div>
+        </router-link>
+      </li>
+      <li class="menu-item">
+        <router-link to="/GsFournitures" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Listes des Machines">Listes des Machines</div>
+        </router-link>
+      </li>
+      <li class="menu-item">
+        <router-link to="/GsSous_traitance" class="menu-link">
+          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
+          <div data-i18n="Listes des Sous-traitances">Listes des Sous-traitances</div>
         </router-link>
       </li>
       
