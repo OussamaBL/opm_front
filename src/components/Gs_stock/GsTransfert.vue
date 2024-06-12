@@ -69,16 +69,16 @@
               <select
                 id="modalEditUserCountry"
                 class="select2 form-select"
-                v-model="data.transfert.produits_finis_id"
+                v-model="data.transfert.produits_id"
                 data-allow-clear="true"
               >
                 <option value="">Select</option>
                 <option
-                  v-for="produit_fini in data.data_produits_finis"
-                  :key="produit_fini.id"
-                  :value="produit_fini.id"
+                  v-for="produit in data.data_produits"
+                  :key="produit.id"
+                  :value="produit.id"
                 >
-                  {{ produit_fini.libelle }}
+                  {{ produit.libelle }}
                 </option>
               </select>
             </div>
@@ -129,8 +129,7 @@
 
   <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="py-3 mb-2">
-      <span class="text-muted fw-light">Gestion de Stock /</span> Transfert entre
-      produits_finis
+      <span class="text-muted fw-light">Gestion de Stock /</span> Transfert entre produits
     </h4>
     <div class="app-ecommerce-category">
       <!-- Category List Table -->
@@ -176,7 +175,7 @@
                 <td>{{ transfert.date_transfert }}</td>
                 <td>{{ transfert.provenance.libelle }}</td>
                 <td>{{ transfert.destination.libelle }}</td>
-                <td>{{ transfert.produit_fini.libelle }}</td>
+                <td>{{ transfert.produit.libelle }}</td>
                 <td>{{ transfert.quantity }}</td>
                 <td>
                   <div class="dropdown">
@@ -234,14 +233,14 @@ const data = reactive({
   data_transferts: [],
   data_provenances: [],
   data_destinations: [],
-  data_produits_finis: [],
+  data_produits: [],
 
   transfert: {
     id: "",
     date_transfert: "",
     provenance_id: "",
     destination_id: "",
-    produits_finis_id: "",
+    produits_id: "",
     quantity: "",
   },
   searchQuery: "",
@@ -255,7 +254,7 @@ const open_modal_addTransfert = () => {
   data.transfert.date_transfert = "";
   data.transfert.provenance_id = "";
   data.transfert.destination_id = "";
-  data.transfert.produits_finis_id = "";
+  data.transfert.produits_id = "";
   data.transfert.quantity = "";
 };
 
@@ -265,7 +264,7 @@ const open_modal_updateTransfert = (transfert) => {
   data.transfert.date_transfert = transfert.date_transfert;
   data.transfert.provenance_id = transfert.provenance_id;
   data.transfert.destination_id = transfert.destination_id;
-  data.transfert.produits_finis_id = transfert.produits_finis_id;
+  data.transfert.produits_id = transfert.produits_id;
   data.transfert.quantity = transfert.quantity;
 };
 
@@ -299,16 +298,16 @@ const fetch_data_destinations = async () => {
   }
 };
 
-const fetch_data_produits_finis = async () => {
-  data.data_produits_finis = [];
+const fetch_data_produits = async () => {
+  data.data_produits = [];
   try {
-    const response = await axios.get("http://127.0.0.1:8000/api/produits_finis");
+    const response = await axios.get("http://127.0.0.1:8000/api/produits");
 
-    data.data_produits_finis = response.data.produits_finis;
+    data.data_produits = response.data.produits;
   } catch (error) {
     Swal.fire({
       icon: "error",
-      title: "produits_finis...",
+      title: "produits...",
       text: error,
     });
   }
@@ -467,7 +466,7 @@ onMounted(() => {
   fetch_data();
   fetch_data_provenances();
   fetch_data_destinations();
-  fetch_data_produits_finis();
+  fetch_data_produits();
 });
 </script>
 

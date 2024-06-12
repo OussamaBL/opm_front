@@ -31,39 +31,20 @@
             </div>
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
-              <label class="form-label" for="modalEditUserFirstName">Code Produit</label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.inventaire.produit_fini_id"
-                data-allow-clear="true"
-              >
-                <option value="">Select</option>
-                <option
-                  v-for="produit_fini in data.data_produits_finis"
-                  :key="produit_fini.id"
-                  :value="produit_fini.id"
-                >
-                  {{ produit_fini.libelle }}
-                </option>
-              </select>
-            </div>
-
-            <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Produit</label>
               <select
                 id="modalEditUserCountry"
                 class="select2 form-select"
-                v-model="data.inventaire.produit_fini_id"
+                v-model="data.inventaire.produit_id"
                 data-allow-clear="true"
               >
                 <option value="">Select</option>
                 <option
-                  v-for="produit_fini in data.data_produits_finis"
-                  :key="produit_fini.id"
-                  :value="produit_fini.id"
+                  v-for="produit in data.data_produits"
+                  :key="produit.id"
+                  :value="produit.id"
                 >
-                  {{ produit_fini.libelle }}
+                  {{ produit.libelle }}
                 </option>
               </select>
             </div>
@@ -186,9 +167,9 @@
             <tbody class="table-border-bottom-0">
               <tr v-for="inventaire in data.data_inventaires.data" :key="inventaire.id">
                 <td>{{ inventaire.date_inventaire }}</td>
-                <td>{{ inventaire.produit_fini.code }}</td>
-                <td>{{ inventaire.produit_fini.libelle }}</td>
-                <td>{{ inventaire.produit_fini.unite.libelle }}</td>
+                <td>{{ inventaire.produit.code }}</td>
+                <td>{{ inventaire.produit.libelle }}</td>
+                <td>{{ inventaire.produit.unite.libelle }}</td>
                 <td>{{ inventaire.depot.libelle }}</td>
                 <td>{{ inventaire.stock_physique }}</td>
                 <td>
@@ -246,13 +227,13 @@ const store = useAuthStore();
 
 const data = reactive({
   data_inventaires: [],
-  data_produits_finis: [],
+  data_produits: [],
   data_unites: [],
   data_depots: [],
   inventaire: {
     id: "",
     date_inventaire: "",
-    produit_fini_id: "",
+    produit_id: "",
     unite_id: "",
     depot_id: "",
     stock_physique: "",
@@ -267,7 +248,7 @@ const open_modal_addInventaire = () => {
   data.inventaire = {
     id: "",
     date_inventaire: "",
-    produit_fini_id: "",
+    produit_id: "",
     unite_id: "",
     depot_id: "",
     stock_physique: "",
@@ -279,16 +260,16 @@ const open_modal_updateInventaire = (inventaire) => {
   data.inventaire = { ...inventaire };
 };
 
-const fetch_data_produits_finis = async () => {
-  data.data_produits_finis = [];
+const fetch_data_produits = async () => {
+  data.data_produits = [];
   try {
-    const response = await axios.get("http://127.0.0.1:8000/api/produits_finis");
+    const response = await axios.get("http://127.0.0.1:8000/api/produits");
 
-    data.data_produits_finis = response.data.produits_finis;
+    data.data_produits = response.data.produits;
   } catch (error) {
     Swal.fire({
       icon: "error",
-      title: "produits_finis...",
+      title: "produits...",
       text: error,
     });
   }
@@ -475,7 +456,7 @@ const deleteInventaire = async (inventaire) => {
 
 onMounted(() => {
   fetch_data();
-  fetch_data_produits_finis();
+  fetch_data_produits();
   fetch_data_unites();
   fetch_data_depots();
 });
