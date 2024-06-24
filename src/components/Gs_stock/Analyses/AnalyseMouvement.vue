@@ -49,8 +49,11 @@
                 <td>{{ mouvement.produit_fini.libelle }}</td>
                 <td>{{ mouvement.produit_fini.unite.libelle }}</td>
                 <td>{{ mouvement.produit_fini.qte }}</td>
-                <td>{{ mouvement.produit_fini.qte }}</td>
-                <td>{{ mouvement.produit_fini.qte }}</td>
+                <td>{{ mouvement.pu_ht }}</td>
+                <td>{{ mouvement.mt_ht }}</td>
+                <td>{{ mouvement.tva }}</td>
+                <td>{{ mouvement.mt_tva }}</td>
+                <td>{{ mouvement.mt_ttc }}</td>
                 <td>{{ mouvement.document.type_document }}</td>
                 <td>{{ mouvement.document.N_document }}</td>
                 <td>{{ mouvement.N_commande }}</td>
@@ -219,32 +222,25 @@ const fetch_data = async (page = 1) => {
   data.data_mouvements = [];
   data.loading = true;
   try {
-    const response = await axios.get('/api/mouvement/index?page=' + page, {
-      params: {
-        search: data.searchQuery
+    const response = await axios.get(
+      "http://127.0.0.1:8000/api/mouvements?page=" + page,
+      {
+        params: {
+          search: data.searchQuery,
+        },
       }
-    });
-    if (response.data.exist) {
-      data.data_mouvements = response.data.mouvements;
-    }
-    else {
-      Swal.fire({
-        icon: 'error',
-        title: 'mouvements...',
-        text: response.data.message,
-      });
-    }
+    );
+
+    data.data_mouvements = response.data.mouvements;
   } catch (error) {
     Swal.fire({
-      icon: 'error',
-      title: 'mouvements...',
+      icon: "error",
+      title: "mouvements...",
       text: error,
     });
-  }
-  finally {
+  } finally {
     data.loading = false;
   }
-
 };
 
 onMounted(() => {

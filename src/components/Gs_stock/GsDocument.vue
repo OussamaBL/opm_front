@@ -5,63 +5,33 @@
     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
       <div class="modal-content p-3 p-md-5">
         <div class="modal-body">
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="text-center mb-4">
             <h3 class="mb-2">Document</h3>
           </div>
           <form id="editUserForm" class="row g-3" onsubmit="return false">
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserCode">N° de document</label>
-              <input
-                type="text"
-                id="modalEditUserCode"
-                v-model="data.document.n_document"
-                class="form-control"
-                placeholder="Saisie la date d code"
-              />
+              <input type="text" id="modalEditUserCode" v-model="data.document.n_document" class="form-control"
+                placeholder="Saisie la date d code" />
             </div>
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
-              <label class="form-label" for="modalEditUsertype_document"
-                >Type de Document</label
-              >
-              <input
-                type="text"
-                id="modalEditUsertype_document"
-                v-model="data.document.type_document"
-                class="form-control"
-                placeholder="Saisie la date d type_document"
-              />
+              <label class="form-label" for="modalEditUsertype_document">Type de Document</label>
+              <input type="text" id="modalEditUsertype_document" v-model="data.document.type_document"
+                class="form-control" placeholder="Saisie la date d type_document" />
             </div>
 
             <div class="col-12 text-center">
-              <button
-                v-if="data.action == 'add'"
-                type="submit"
-                @click="addDocument"
-                class="btn btn-primary me-sm-3 me-1"
-              >
+              <button v-if="data.action == 'add'" type="submit" @click="addDocument"
+                class="btn btn-primary me-sm-3 me-1">
                 Submit
               </button>
-              <button
-                v-if="data.action == 'edit'"
-                type="submit"
-                @click="updateDocument"
-                class="btn btn-primary me-sm-3 me-1"
-              >
+              <button v-if="data.action == 'edit'" type="submit" @click="updateDocument"
+                class="btn btn-primary me-sm-3 me-1">
                 Submit
               </button>
-              <button
-                type="button"
-                class="btn btn-label-secondary"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">
                 Cancel
               </button>
             </div>
@@ -79,30 +49,15 @@
     <div class="app-ecommerce-category">
       <!-- Category List Table -->
       <div class="card">
-        <button
-          class="btn btn-primary"
-          style="width: 170px; margin: 12px"
-          data-bs-toggle="modal"
-          @click="open_modal_addDocument"
-          data-bs-target="#editUser"
-        >
+        <button class="btn btn-primary" style="width: 170px; margin: 12px" data-bs-toggle="modal"
+          @click="open_modal_addDocument" data-bs-target="#editUser">
           Ajouter Document
         </button>
-        <input
-          type="text"
-          v-model="data.searchQuery"
-          @keyup="fetch_data"
-          class="form-control m-3"
-          style="width: 96%"
-          placeholder="Rechercher Document..."
-        />
+        <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%"
+          placeholder="Rechercher Document..." />
         <div class="table-responsive text-nowrap">
-          <img
-            v-if="data.loading"
-            src="/images/loading.gif"
-            style="width: 40px; margin: 20px auto; display: block"
-            alt="Loading"
-          />
+          <img v-if="data.loading" src="/images/loading.gif" style="width: 40px; margin: 20px auto; display: block"
+            alt="Loading" />
           <table v-if="!data.loading" class="table">
             <thead>
               <tr style="background-color: #051922">
@@ -118,29 +73,16 @@
                 <td>{{ document.type_document }}</td>
                 <td>
                   <div class="dropdown">
-                    <button
-                      type="button"
-                      class="btn p-0 dropdown-toggle hide-arrow"
-                      data-bs-toggle="dropdown"
-                    >
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                       <i class="ti ti-dots-vertical"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a
-                        class="dropdown-item"
-                        data-bs-toggle="modal"
-                        @click="open_modal_updateDocument(document)"
-                        data-bs-target="#editUser"
-                        href="javascript:void(0);"
-                      >
+                      <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateDocument(document)"
+                        data-bs-target="#editUser" href="javascript:void(0);">
                         <i class="ti ti-pencil me-1"></i> Edit
                       </a>
-                      <a
-                        class="dropdown-item"
-                        @click="deleteDocument(document)"
-                        href="javascript:void(0);"
-                        ><i class="ti ti-trash me-1"></i> Delete</a
-                      >
+                      <a class="dropdown-item" @click="deleteDocument(document)" href="javascript:void(0);"><i
+                          class="ti ti-trash me-1"></i> Delete</a>
                     </div>
                   </div>
                 </td>
@@ -148,11 +90,8 @@
             </tbody>
           </table>
         </div>
-        <Bootstrap5Pagination
-          :data="data.data_documents"
-          @pagination-change-page="fetch_data"
-          style="margin: 16px; justify-content: center !important"
-        />
+        <Bootstrap5Pagination :data="data.data_documents" @pagination-change-page="fetch_data"
+          style="margin: 16px; justify-content: center !important" />
       </div>
     </div>
   </div>

@@ -5,45 +5,24 @@
     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
       <div class="modal-content p-3 p-md-5">
         <div class="modal-body">
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="text-center mb-4">
             <h3 class="mb-2">Mouvements de stock</h3>
           </div>
-          <form
-            id="editUserForm"
-            class="row g-3"
-            @submit.prevent="data.action == 'add' ? addMouvement() : updateMouvement()"
-          >
+          <form id="editUserForm" class="row g-3"
+            @submit.prevent="data.action == 'add' ? addMouvement() : updateMouvement()">
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserEmail">Date</label>
-              <input
-                type="text"
-                id="modalEditUserEmail"
-                v-model="data.mouvement.date"
-                class="form-control"
-                placeholder="Saisie la date"
-              />
+              <input type="text" id="modalEditUserEmail" v-model="data.mouvement.date" class="form-control"
+                placeholder="Saisie la date" />
             </div>
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Provenance</label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.mouvement.provenance_id"
-                data-allow-clear="true"
-              >
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.mouvement.provenance_id"
+                data-allow-clear="true">
                 <option value="">Select</option>
-                <option
-                  v-for="provenance in data.data_provenances"
-                  :key="provenance.id"
-                  :value="provenance.id"
-                >
+                <option v-for="provenance in data.data_provenances" :key="provenance.id" :value="provenance.id">
                   {{ provenance.libelle }}
                 </option>
               </select>
@@ -51,18 +30,10 @@
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Destination</label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.mouvement.destination_id"
-                data-allow-clear="true"
-              >
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.mouvement.destination_id"
+                data-allow-clear="true">
                 <option value="">Select</option>
-                <option
-                  v-for="destination in data.data_destinations"
-                  :key="destination.id"
-                  :value="destination.id"
-                >
+                <option v-for="destination in data.data_destinations" :key="destination.id" :value="destination.id">
                   {{ destination.libelle }}
                 </option>
               </select>
@@ -70,18 +41,10 @@
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Depot</label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.mouvement.depot_id"
-                data-allow-clear="true"
-              >
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.mouvement.depot_id"
+                data-allow-clear="true">
                 <option value="">Select</option>
-                <option
-                  v-for="depot in data.data_depots"
-                  :key="depot.id"
-                  :value="depot.id"
-                >
+                <option v-for="depot in data.data_depots" :key="depot.id" :value="depot.id">
                   {{ depot.libelle }}
                 </option>
               </select>
@@ -89,18 +52,10 @@
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Produit</label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.mouvement.produit_id"
-                data-allow-clear="true"
-              >
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.mouvement.produit_id"
+                data-allow-clear="true">
                 <option value="">Select</option>
-                <option
-                  v-for="produit in data.data_produits"
-                  :key="produit.id"
-                  :value="produit.id"
-                >
+                <option v-for="produit in data.data_produits" :key="produit.id" :value="produit.id">
                   {{ produit.libelle }}
                 </option>
               </select>
@@ -108,18 +63,10 @@
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Type document</label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.mouvement.document_id"
-                data-allow-clear="true"
-              >
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.mouvement.document_id"
+                data-allow-clear="true">
                 <option value="">Select</option>
-                <option
-                  v-for="document in data.data_documents"
-                  :key="document.id"
-                  :value="document.id"
-                >
+                <option v-for="document in data.data_documents" :key="document.id" :value="document.id">
                   {{ document.type_document }}
                 </option>
               </select>
@@ -127,12 +74,7 @@
 
             <div class="col-12 text-center">
               <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
-              <button
-                type="button"
-                class="btn btn-label-secondary"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">
                 Cancel
               </button>
             </div>
@@ -150,30 +92,15 @@
     <div class="app-ecommerce-category">
       <!-- Category List Table -->
       <div class="card">
-        <button
-          class="btn btn-primary"
-          style="width: 170px; margin: 12px"
-          data-bs-toggle="modal"
-          @click="open_modal_addMouvement"
-          data-bs-target="#editUser"
-        >
+        <button class="btn btn-primary" style="width: 170px; margin: 12px" data-bs-toggle="modal"
+          @click="open_modal_addMouvement" data-bs-target="#editUser">
           Ajouter Mouvement
         </button>
-        <input
-          type="text"
-          v-model="searchQuery"
-          @keyup="fetch_data"
-          class="form-control m-3"
-          style="width: 96%"
-          placeholder="Rechercher Mouvement..."
-        />
+        <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%"
+          placeholder="Rechercher Mouvement..." />
         <div class="table-responsive text-nowrap">
-          <img
-            v-if="data.loading"
-            src="/images/loading.gif"
-            style="width: 40px; margin: 20px auto; display: block"
-            alt="Loading"
-          />
+          <img v-if="data.loading" src="/images/loading.gif" style="width: 40px; margin: 20px auto; display: block"
+            alt="Loading" />
           <table v-if="!data.loading" class="table">
             <thead>
               <tr style="background-color: #051922">
@@ -211,29 +138,16 @@
                 <td>{{ mouvement.N_commande }}</td>
                 <td>
                   <div class="dropdown">
-                    <button
-                      type="button"
-                      class="btn p-0 dropdown-toggle hide-arrow"
-                      data-bs-toggle="dropdown"
-                    >
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                       <i class="ti ti-dots-vertical"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a
-                        class="dropdown-item"
-                        data-bs-toggle="modal"
-                        @click="open_modal_updateMouvement(mouvement)"
-                        data-bs-target="#editUser"
-                        href="javascript:void(0);"
-                      >
+                      <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateMouvement(mouvement)"
+                        data-bs-target="#editUser" href="javascript:void(0);">
                         <i class="ti ti-pencil me-1"></i> Edit
                       </a>
-                      <a
-                        class="dropdown-item"
-                        @click="deleteMouvement(mouvement)"
-                        href="javascript:void(0);"
-                        ><i class="ti ti-trash me-1"></i> Delete</a
-                      >
+                      <a class="dropdown-item" @click="deleteMouvement(mouvement)" href="javascript:void(0);"><i
+                          class="ti ti-trash me-1"></i> Delete</a>
                     </div>
                   </div>
                 </td>
@@ -241,11 +155,8 @@
             </tbody>
           </table>
         </div>
-        <Bootstrap5Pagination
-          :data="data.data_Mouvement"
-          @pagination-change-page="fetch_data"
-          style="margin: 16px; justify-content: center !important"
-        />
+        <Bootstrap5Pagination :data="data.data_Mouvement" @pagination-change-page="fetch_data"
+          style="margin: 16px; justify-content: center !important" />
       </div>
     </div>
     <!-- Offcanvas to add new customer -->

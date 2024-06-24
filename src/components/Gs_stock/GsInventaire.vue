@@ -5,45 +5,24 @@
     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
       <div class="modal-content p-3 p-md-5">
         <div class="modal-body">
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="text-center mb-4">
             <h3 class="mb-2">Inventaire</h3>
           </div>
-          <form
-            id="editUserForm"
-            class="row g-3"
-            @submit.prevent="data.action === 'add' ? addInventaire() : updateInventaire()"
-          >
+          <form id="editUserForm" class="row g-3"
+            @submit.prevent="data.action === 'add' ? addInventaire() : updateInventaire()">
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserEmail">Date d'inventaire</label>
-              <input
-                type="text"
-                id="modalEditUserEmail"
-                v-model="data.inventaire.date_inventaire"
-                class="form-control"
-                placeholder="Saisie la date d inventaire"
-              />
+              <input type="text" id="modalEditUserEmail" v-model="data.inventaire.date_inventaire" class="form-control"
+                placeholder="Saisie la date d inventaire" />
             </div>
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Produit</label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.inventaire.produit_id"
-                data-allow-clear="true"
-              >
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.inventaire.produit_id"
+                data-allow-clear="true">
                 <option value="">Select</option>
-                <option
-                  v-for="produit in data.data_produits"
-                  :key="produit.id"
-                  :value="produit.id"
-                >
+                <option v-for="produit in data.data_produits" :key="produit.id" :value="produit.id">
                   {{ produit.libelle }}
                 </option>
               </select>
@@ -51,18 +30,10 @@
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Unite</label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.inventaire.unite_id"
-                data-allow-clear="true"
-              >
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.inventaire.unite_id"
+                data-allow-clear="true">
                 <option value="">Select</option>
-                <option
-                  v-for="unite in data.data_unites"
-                  :key="unite.id"
-                  :value="unite.id"
-                >
+                <option v-for="unite in data.data_unites" :key="unite.id" :value="unite.id">
                   {{ unite.libelle }}
                 </option>
               </select>
@@ -70,46 +41,26 @@
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Depot</label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.inventaire.depot_id"
-                data-allow-clear="true"
-              >
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.inventaire.depot_id"
+                data-allow-clear="true">
                 <option value="">Select</option>
-                <option
-                  v-for="depot in data.data_depots"
-                  :key="depot.id"
-                  :value="depot.id"
-                >
+                <option v-for="depot in data.data_depots" :key="depot.id" :value="depot.id">
                   {{ depot.libelle }}
                 </option>
               </select>
             </div>
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
-              <label class="form-label" for="modalEditUserFirstName"
-                >Stock physique</label
-              >
-              <input
-                type="text"
-                id="modalEditUserFirstName"
-                v-model="data.inventaire.stock_physique"
-                class="form-control"
-                placeholder="Saisie la stock physique"
-              />
+              <label class="form-label" for="modalEditUserFirstName">Stock physique</label>
+              <input type="text" id="modalEditUserFirstName" v-model="data.inventaire.stock_physique"
+                class="form-control" placeholder="Saisie la stock physique" />
             </div>
 
             <div class="col-12 text-center">
               <button type="submit" class="btn btn-primary me-sm-3 me-1">
                 {{ data.action === "add" ? "Submit" : "Update" }}
               </button>
-              <button
-                type="button"
-                class="btn btn-label-secondary"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">
                 Cancel
               </button>
             </div>
@@ -127,30 +78,15 @@
     <div class="app-ecommerce-category">
       <!-- Category List Table -->
       <div class="card">
-        <button
-          class="btn btn-primary"
-          style="width: 170px; margin: 12px"
-          data-bs-toggle="modal"
-          @click="open_modal_addInventaire"
-          data-bs-target="#editUser"
-        >
+        <button class="btn btn-primary" style="width: 170px; margin: 12px" data-bs-toggle="modal"
+          @click="open_modal_addInventaire" data-bs-target="#editUser">
           Ajouter Inventaire
         </button>
-        <input
-          type="text"
-          v-model="searchQuery"
-          @keyup="fetch_data"
-          class="form-control m-3"
-          style="width: 96%"
-          placeholder="Rechercher Inventaire..."
-        />
+        <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%"
+          placeholder="Rechercher Inventaire..." />
         <div class="table-responsive text-nowrap">
-          <img
-            v-if="data.loading"
-            src="/images/loading.gif"
-            style="width: 40px; margin: 20px auto; display: block"
-            alt="Loading"
-          />
+          <img v-if="data.loading" src="/images/loading.gif" style="width: 40px; margin: 20px auto; display: block"
+            alt="Loading" />
           <table v-if="!data.loading" class="table">
             <thead>
               <tr style="background-color: #051922">
@@ -174,29 +110,16 @@
                 <td>{{ inventaire.stock_physique }}</td>
                 <td>
                   <div class="dropdown">
-                    <button
-                      type="button"
-                      class="btn p-0 dropdown-toggle hide-arrow"
-                      data-bs-toggle="dropdown"
-                    >
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                       <i class="ti ti-dots-vertical"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a
-                        class="dropdown-item"
-                        data-bs-toggle="modal"
-                        @click="open_modal_updateInventaire(inventaire)"
-                        data-bs-target="#editUser"
-                        href="javascript:void(0);"
-                      >
+                      <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateInventaire(inventaire)"
+                        data-bs-target="#editUser" href="javascript:void(0);">
                         <i class="ti ti-pencil me-1"></i> Edit
                       </a>
-                      <a
-                        class="dropdown-item"
-                        @click="deleteInventaire(inventaire)"
-                        href="javascript:void(0);"
-                        ><i class="ti ti-trash me-1"></i> Delete</a
-                      >
+                      <a class="dropdown-item" @click="deleteInventaire(inventaire)" href="javascript:void(0);"><i
+                          class="ti ti-trash me-1"></i> Delete</a>
                     </div>
                   </div>
                 </td>
@@ -204,11 +127,8 @@
             </tbody>
           </table>
         </div>
-        <Bootstrap5Pagination
-          :data="data.data_inventaires"
-          @pagination-change-page="fetch_data"
-          style="margin: 16px; justify-content: center !important"
-        />
+        <Bootstrap5Pagination :data="data.data_inventaires" @pagination-change-page="fetch_data"
+          style="margin: 16px; justify-content: center !important" />
       </div>
     </div>
     <!-- Offcanvas to add new customer -->
@@ -310,7 +230,7 @@ const fetch_data = async (page = 1) => {
   data.loading = true;
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/api/Inventaires?page=" + page,
+      "http://127.0.0.1:8000/api/inventaires?page=" + page,
       {
         params: {
           search: data.searchQuery,

@@ -5,41 +5,23 @@
     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
       <div class="modal-content p-3 p-md-5">
         <div class="modal-body">
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="text-center mb-4">
             <h3 class="mb-2">Transfert</h3>
           </div>
           <form id="editUserForm" class="row g-3" onsubmit="return false">
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserEmail">Date de transfert</label>
-              <input
-                type="text"
-                id="modalEditUserEmail"
-                v-model="data.transfert.date_transfert"
-                class="form-control"
-                placeholder="Saisie la date"
-              />
+              <input type="text" id="modalEditUserEmail" v-model="data.transfert.date_transfert" class="form-control"
+                placeholder="Saisie la date" />
             </div>
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Provenance</label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.transfert.provenance_id"
-                data-allow-clear="true"
-              >
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.transfert.provenance_id"
+                data-allow-clear="true">
                 <option value="">Select</option>
-                <option
-                  v-for="provenance in data.data_provenances"
-                  :key="provenance.id"
-                  :value="provenance.id"
-                >
+                <option v-for="provenance in data.data_provenances" :key="provenance.id" :value="provenance.id">
                   {{ provenance.libelle }}
                 </option>
               </select>
@@ -47,18 +29,10 @@
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Destination</label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.transfert.destination_id"
-                data-allow-clear="true"
-              >
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.transfert.destination_id"
+                data-allow-clear="true">
                 <option value="">Select</option>
-                <option
-                  v-for="destination in data.data_destinations"
-                  :key="destination.id"
-                  :value="destination.id"
-                >
+                <option v-for="destination in data.data_destinations" :key="destination.id" :value="destination.id">
                   {{ destination.libelle }}
                 </option>
               </select>
@@ -66,18 +40,10 @@
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Produit </label>
-              <select
-                id="modalEditUserCountry"
-                class="select2 form-select"
-                v-model="data.transfert.produits_id"
-                data-allow-clear="true"
-              >
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.transfert.produits_id"
+                data-allow-clear="true">
                 <option value="">Select</option>
-                <option
-                  v-for="produit in data.data_produits"
-                  :key="produit.id"
-                  :value="produit.id"
-                >
+                <option v-for="produit in data.data_produits" :key="produit.id" :value="produit.id">
                   {{ produit.libelle }}
                 </option>
               </select>
@@ -85,38 +51,20 @@
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
               <label class="form-label" for="modalEditUserFirstName">Quantity</label>
-              <input
-                type="text"
-                id="modalEditUserFirstName"
-                v-model="data.transfert.quantity"
-                class="form-control"
-                placeholder="Saisie la quantity"
-              />
+              <input type="text" id="modalEditUserFirstName" v-model="data.transfert.quantity" class="form-control"
+                placeholder="Saisie la quantity" />
             </div>
 
             <div class="col-12 text-center">
-              <button
-                v-if="data.action == 'add'"
-                type="submit"
-                @click="addTransfert"
-                class="btn btn-primary me-sm-3 me-1"
-              >
+              <button v-if="data.action == 'add'" type="submit" @click="addTransfert"
+                class="btn btn-primary me-sm-3 me-1">
                 Submit
               </button>
-              <button
-                v-if="data.action == 'edit'"
-                type="submit"
-                @click="updateTransfert"
-                class="btn btn-primary me-sm-3 me-1"
-              >
+              <button v-if="data.action == 'edit'" type="submit" @click="updateTransfert"
+                class="btn btn-primary me-sm-3 me-1">
                 Submit
               </button>
-              <button
-                type="button"
-                class="btn btn-label-secondary"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">
                 Cancel
               </button>
             </div>
@@ -134,30 +82,15 @@
     <div class="app-ecommerce-category">
       <!-- Category List Table -->
       <div class="card">
-        <button
-          class="btn btn-primary"
-          style="width: 170px; margin: 12px"
-          data-bs-toggle="modal"
-          @click="open_modal_addTransfert"
-          data-bs-target="#editUser"
-        >
+        <button class="btn btn-primary" style="width: 170px; margin: 12px" data-bs-toggle="modal"
+          @click="open_modal_addTransfert" data-bs-target="#editUser">
           Ajouter Transfert
         </button>
-        <input
-          type="text"
-          v-model="data.searchQuery"
-          @keyup="fetch_data"
-          class="form-control m-3"
-          style="width: 96%"
-          placeholder="Rechercher Transfert..."
-        />
+        <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%"
+          placeholder="Rechercher Transfert..." />
         <div class="table-responsive text-nowrap">
-          <img
-            v-if="data.loading"
-            src="/images/loading.gif"
-            style="width: 40px; margin: 20px auto; display: block"
-            alt="Loading"
-          />
+          <img v-if="data.loading" src="/images/loading.gif" style="width: 40px; margin: 20px auto; display: block"
+            alt="Loading" />
           <table v-if="!data.loading" class="table">
             <thead>
               <tr style="background-color: #051922">
@@ -179,29 +112,16 @@
                 <td>{{ transfert.quantity }}</td>
                 <td>
                   <div class="dropdown">
-                    <button
-                      type="button"
-                      class="btn p-0 dropdown-toggle hide-arrow"
-                      data-bs-toggle="dropdown"
-                    >
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                       <i class="ti ti-dots-vertical"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a
-                        class="dropdown-item"
-                        data-bs-toggle="modal"
-                        @click="open_modal_updateTransfert(transfert)"
-                        data-bs-target="#editUser"
-                        href="javascript:void(0);"
-                      >
+                      <a class="dropdown-item" data-bs-toggle="modal" @click="open_modal_updateTransfert(transfert)"
+                        data-bs-target="#editUser" href="javascript:void(0);">
                         <i class="ti ti-pencil me-1"></i> Edit
                       </a>
-                      <a
-                        class="dropdown-item"
-                        @click="deleteTransfert(transfert)"
-                        href="javascript:void(0);"
-                        ><i class="ti ti-trash me-1"></i> Delete</a
-                      >
+                      <a class="dropdown-item" @click="deleteTransfert(transfert)" href="javascript:void(0);"><i
+                          class="ti ti-trash me-1"></i> Delete</a>
                     </div>
                   </div>
                 </td>
@@ -209,11 +129,8 @@
             </tbody>
           </table>
         </div>
-        <Bootstrap5Pagination
-          :data="data.data_transferts"
-          @pagination-change-page="fetch_data"
-          style="margin: 16px; justify-content: center !important"
-        />
+        <Bootstrap5Pagination :data="data.data_transferts" @pagination-change-page="fetch_data"
+          style="margin: 16px; justify-content: center !important" />
       </div>
     </div>
   </div>
@@ -302,6 +219,8 @@ const fetch_data_produits = async () => {
   data.data_produits = [];
   try {
     const response = await axios.get("http://127.0.0.1:8000/api/produits");
+    console.log("Response:", response);
+    
 
     data.data_produits = response.data.produits;
   } catch (error) {
