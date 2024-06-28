@@ -13,7 +13,12 @@ import GsDestination from "@/components/Gs_stock/GsDestination.vue";
 import GsDocument from "@/components/Gs_stock/GsDocument.vue";
 import GsTransfert from "@/components/Gs_stock/GsTransfert.vue";
 import GsInventaire from "@/components/Gs_stock/GsInventaire.vue";
-import MouvementStock from "@/components/Gs_stock/MouvementStocks.vue";
+import GSMouvement from "@/components/Gs_stock/GsMouvement.vue";
+import AnalyseInventaire from "@/components/Gs_stock/Analyses/AnalyseInventaire.vue";
+import AnalyseStockeDesCnstituantsDuJour from "@/components/Gs_stock/Analyses/AnalyseStockeDesCnstituantsDuJour.vue";
+import AnalyseStockeDesCnstituantsDuJourParAffire from "@/components/Gs_stock/Analyses/AnalyseStockeDesCnstituantsDuJourParAffire.vue";
+import AnalyseStockeDesPFI from "@/components/Gs_stock/Analyses/AnalyseStockeDesPFI.vue";
+
 
 
 // import { useAuthStore } from '@/stores/useAuthStore.js';
@@ -91,9 +96,9 @@ const router = createRouter({
                 component:  GsDestination,
               },
               {
-                path: '/MouvementStocks',
-                name: 'MouvementStocks',
-                component:  MouvementStock,
+                path: '/Mouvements',
+                name: 'Mouvements',
+                component:  GSMouvement,
               },
               {
                 path: '/Transferts',
@@ -105,6 +110,27 @@ const router = createRouter({
                 name: 'Inventaires',
                 component:  GsInventaire,
               },
+              {
+                path: '/AnalyseInventaires',
+                name: 'AnalyseInventaires',
+                component:  AnalyseInventaire,
+              },
+              {
+                path: '/AnalyseStockeDesCnstituantsDuJour',
+                name: 'AnalyseStockeDesCnstituantsDuJour',
+                component:  AnalyseStockeDesCnstituantsDuJour,
+              },
+              {
+                path: '/AnalyseStockeDesCnstituantsDuJourParAffire',
+                name: 'AnalyseStockeDesCnstituantsDuJourParAffire',
+                component:  AnalyseStockeDesCnstituantsDuJourParAffire,
+              },
+              {
+                path: '/AnalyseStockeDesPFI',
+                name: 'AnalyseStockeDesPFI',
+                component:  AnalyseStockeDesPFI,
+              },
+
               
             ],
           },

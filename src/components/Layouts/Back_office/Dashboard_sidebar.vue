@@ -236,7 +236,7 @@
             </router-link>
           </li>
           <li class="menu-item">
-            <router-link to="/MouvementStocks" class="menu-link">
+            <router-link to="/Mouvement" class="menu-link">
               <div data-i18n="Les Mouvement de stock">Les Mouvement de stock</div>
             </router-link>
           </li>
@@ -264,22 +264,22 @@
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
+                <router-link to="/AnalyseInventaires" class="menu-link">
                   <div data-i18n="Inventaire">Inventaire</div>
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
+                <router-link to="/AnalyseStockeDesCnstituantsDuJour" class="menu-link">
                   <div data-i18n="Stock des constituants du jour">Stock des constituants du jour</div>
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
+                <router-link to="/AnalyseStockeDesCnstituantsDuJourParAffire" class="menu-link">
                   <div data-i18n="Stouck des constituants du jour par affaire">Stouck des constituants du jour par affaire</div>
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
+                <router-link to="/AnalyseStockeDesPFI" class="menu-link">
                   <div data-i18n="Stock des PFI du jour par affaire">Stock des PFI du jour par affaire</div>
                 </router-link>
               </li>

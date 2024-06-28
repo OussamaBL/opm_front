@@ -155,7 +155,7 @@
             </tbody>
           </table>
         </div>
-        <Bootstrap5Pagination :data="data.data_Mouvement" @pagination-change-page="fetch_data"
+        <Bootstrap5Pagination :data="data.data_transferts" @pagination-change-page="fetch_data"
           style="margin: 16px; justify-content: center !important" />
       </div>
     </div>
@@ -167,21 +167,20 @@
 import { reactive, onMounted } from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
-// import router from '@/router';
 import { useAuthStore } from "@/stores/useAuthStore.js";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
 
 const store = useAuthStore();
 
 const data = reactive({
-  data_mouvements: [],
+  data_mouvements: { data: [], meta: {} },  
   data_provenances: [],
   data_destinations: [],
   data_depots: [],
   data_produits: [],
   data_unites: [],
   data_documents: [],
-  data_commands: [],
+  data_commandes: [],
   searchQuery: "",
 
   mouvement: {
@@ -326,11 +325,12 @@ const fetch_data_commandes = async () => {
 };
 
 const fetch_data = async (page = 1) => {
-  data.data_mouvements = [];
+  data.data_mouvements = { data: [], meta: {} };
+  console.log(data.data_mouvements);
   data.loading = true;
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/api/mouvements?page=" + page,
+      `http://127.0.0.1:8000/api/mouvements?page=${page}`,
       {
         params: {
           search: data.searchQuery,
@@ -359,7 +359,7 @@ const addMouvement = async () => {
     );
 
     if (response.status === 200) {
-      data.data_mouvements.push(response.data.mouvement);
+      data.data_mouvements.data.push(response.data.mouvement);
       Swal.fire({
         icon: "success",
         title: "mouvements...",
@@ -398,7 +398,7 @@ const updateMouvement = async () => {
     );
 
     if (response.status === 200) {
-      data.data_mouvements = data.data_mouvements.map((mouvement) =>
+      data.data_mouvements.data = data.data_mouvements.data.map((mouvement) =>
         mouvement.id === data.mouvement.id ? response.data.mouvement : mouvement
       );
       Swal.fire({
@@ -441,36 +441,29 @@ const deleteMouvement = async (mouvement) => {
   try {
     Swal.fire({
       title: "Confirm Delete",
-      text: `Are you sure you want to delete the mouvement '${mouvement.libelle}'?`,
+      text: `Are you sure you want to delete the mouvement ${mouvement.id}?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "Cancel",
+      cancelButtonText: "No, keep it",
     }).then(async (result) => {
       if (result.isConfirmed) {
         const response = await axios.delete(
           `http://127.0.0.1:8000/api/mouvements/${mouvement.id}`
         );
-        if (response.status === 204) {
-          data.data_mouvements = data.data_mouvements.filter(
-            (d) => d.id !== mouvement.id
+
+        if (response.status === 200) {
+          data.data_mouvements.data = data.data_mouvements.data.filter(
+            (m) => m.id !== mouvement.id
           );
-          Swal.fire({
-            icon: "success",
-            title: "mouvement...",
-            text: response.data.message,
-          });
+          Swal.fire("Deleted!", response.data.message, "success");
         } else {
-          Swal.fire({
-            icon: "error",
-            title: "mouvement...",
-            text: response.data.message,
-          });
+          Swal.fire("Error!", response.data.message, "error");
         }
       }
     });
   } catch (error) {
-    store.setErrors(error.response.data.errors);
+    Swal.fire("Error!", error.message, "error");
   }
 };
 
@@ -485,12 +478,9 @@ onMounted(() => {
   fetch_data_commandes();
 });
 </script>
-<style>
-div:where(.swal2-container) {
-  z-index: 2000;
-}
 
-.table:not(.table-dark) thead:not(.table-dark) th {
-  color: white;
+<style scoped>
+.loader {
+  text-align: center;
 }
 </style>
