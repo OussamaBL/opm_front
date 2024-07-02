@@ -44,7 +44,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addTypeClient" data-bs-target="#editUser">Ajouter type de client</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher type des clients...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher type des clients...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -129,7 +129,7 @@
       data.data_type_clients=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/type_clients/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/type_clients/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -161,7 +161,7 @@
     const addTypeClient = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/type_clients/store', data.type_client);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/type_clients/store`, data.type_client);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -178,7 +178,20 @@
           });
         }
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -194,7 +207,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/type_clients/destroy/"+type_client.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/type_clients/destroy/`+type_client.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -219,7 +232,7 @@
   
     const updateTypeClient = async () => {
       try {
-        const response = await axios.put("/api/type_clients/update/"+data.type_client.id,data.type_client);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/type_clients/update/`+data.type_client.id,data.type_client);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -237,7 +250,20 @@
         }
       } 
       catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   

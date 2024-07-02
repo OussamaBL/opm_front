@@ -47,7 +47,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addLocation" data-bs-target="#editUser">Ajouter Location</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Locations...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Locations par constituant">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -139,7 +139,7 @@
     const fetch_data_unites = async () => {
       data.data_unites=[];
       try {
-        const response = await axios.get('/api/unites/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/unites/get`);
         if(response.data.exist){
           data.data_unites=response.data.unites;
         } 
@@ -156,7 +156,7 @@
       data.data_locations=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/locations/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/locations/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -188,7 +188,7 @@
     const addLocation = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/locations/store', data.location);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/locations/store`, data.location);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -205,7 +205,20 @@
           });
         }
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -221,7 +234,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/locations/destroy/"+location.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/locations/destroy/`+location.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -246,7 +259,7 @@
   
     const updateLocation = async () => {
       try {
-        const response = await axios.put("/api/locations/update/"+data.location.id,data.location);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/locations/update/`+data.location.id,data.location);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -264,7 +277,20 @@
         }
       } 
       catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   

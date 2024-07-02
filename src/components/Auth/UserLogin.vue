@@ -118,7 +118,7 @@
       data.invalid_password="";
       if(!validateLogin()) return;
       try {
-        const response = await axios.post('/api/login', data.user);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/login`, data.user);
         if(response.data.success){
           let user_auth=response.data.user;
           store.storeUser(user_auth);
@@ -127,7 +127,7 @@
             title: 'Login success',
             text: "Welcome to Activ Digital "+ response.data.user.data.name,
           });
-          router.push('/UserDashboard');
+          router.push('/UserProfile');
         }else{
           Swal.fire({
             icon: 'error',

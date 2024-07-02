@@ -230,7 +230,7 @@
       <li class="menu-item has-sub">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons fa fa-cogs" aria-hidden="true"></i>
-          <div data-i18n="Gestion de personnel">Gestion du personnel</div>
+          <div data-i18n="Gestion de Transports">Gestion du Transports</div>
         </a>
         <ul class="menu-sub">
           
@@ -262,7 +262,7 @@
       </li>
       
       <li class="menu-item">
-        <router-link to="/Type_produits" class="menu-link">
+        <router-link to="/GsProduits_fini" class="menu-link">
           <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
           <div data-i18n="Listes des produits fini">Listes des produits fini</div>
         </router-link>
@@ -294,20 +294,13 @@
       </li>
 
       <li class="menu-item">
-        <router-link to="/GsClients" class="menu-link">
-          <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
-          <div data-i18n="Listes des clients">Listes des clients</div>
-        </router-link>
-      </li>
-
-      <li class="menu-item">
-        <router-link to="/GsFournitures" class="menu-link">
+        <router-link to="/GsLocations" class="menu-link">
           <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
           <div data-i18n="Listes des Locations">Listes des Locations</div>
         </router-link>
       </li>
       <li class="menu-item">
-        <router-link to="/GsFournitures" class="menu-link">
+        <router-link to="/GsMachines" class="menu-link">
           <i class="menu-icon tf-icons fa fa-users" aria-hidden="true"></i>
           <div data-i18n="Listes des Machines">Listes des Machines</div>
         </router-link>

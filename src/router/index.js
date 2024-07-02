@@ -5,6 +5,7 @@ import Forget_password from "@/components/Auth/Forget_password.vue";
 import UserDashboard from "@/components/Dashboard/UserDashboard.vue";
 import UserProfile from "@/components/Dashboard/UserProfile.vue";
 import GsAffaires from "@/components/Gs_production/GsAffaires.vue";
+import GsProduits_fini from "@/components/Gs_production/GsProduits_fini.vue";
 import Type_produits from "@/components/Gs_production/Type_produits.vue";
 import GsFournisseurs from "@/components/Gs_production/GsFournisseurs.vue";
 import GsFournitures from "@/components/Gs_production/GsFournitures.vue";
@@ -52,6 +53,7 @@ const router = createRouter({
             path: "/",
             name: "UserLogin",
             component: UserLogin,
+            
         },
         {
             path: "/Forget_password",
@@ -84,6 +86,12 @@ const router = createRouter({
                 name: 'Type_produits',
                 component:  Type_produits,
               },
+              {
+                path: '/GsProduits_fini',
+                name: 'GsProduits_fini',
+                component:  GsProduits_fini,
+              },
+              
               {
                 path: '/Gs_unites',
                 name: 'Gs_unites',

@@ -11,8 +11,8 @@
                       </div>
                       <form id="editUserForm" class="row g-3" onsubmit="return false">
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserFirstName">Mois de l'avance</label>
-                          <input type="text" id="modalEditUserFirstName" v-model="data.avance.mois_avance" class="form-control" placeholder="Saisie le nom" />
+                          <label class="form-label" for="modalEditUserMonthAdvance">Mois de l'avance</label>
+                          <input type="month" id="modalEditUserMonthAdvance" v-model="data.avance.mois_avance" class="form-control" placeholder="MM/YYYY" />
                         </div>
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
                           <label class="form-label" for="modalEditUserFirstName">Personnel</label>
@@ -51,7 +51,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addAvance" data-bs-target="#editUser">Ajouter un Avance</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des avances...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher par mois d'avance">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -151,7 +151,7 @@
     const fetch_data_personnels = async () => {
       data.data_personnels=[];
       try {
-        const response = await axios.get('/api/personnels/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/personnels/get`);
         if(response.data.exist){
           data.data_personnels=response.data.personnels;
         } 
@@ -168,7 +168,7 @@
       data.data_avances=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/avances/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/avances/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -200,13 +200,13 @@
     const addAvance = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/avances/store', data.avance);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/avances/store`, data.avance);
         if(response.data.success){
           fetch_data();
           Swal.fire({
             icon: 'success',
             title: 'Avances...',
-            text: "Avance '"+ response.data.avance+"' added",
+            text: "Avance of '"+ response.data.avance+"' added",
           });
         }
         else{
@@ -217,7 +217,20 @@
           });
         }
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -233,7 +246,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/avances/destroy/"+avance.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/avances/destroy/`+avance.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -258,7 +271,7 @@
   
     const updateAvance = async () => {
       try {
-        const response = await axios.put("/api/avances/update/"+data.avance.id,data.avance);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/avances/update/`+data.avance.id,data.avance);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -276,7 +289,20 @@
         }
       } 
       catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   

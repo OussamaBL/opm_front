@@ -104,7 +104,6 @@
     data_users: [],
     user: {
       id: '',
-      avatar: '',
       name: '',
       email: '',
       password: '',
@@ -131,24 +130,25 @@
   }
 
   const fetch_data = async () => {
-    data.data_categories=[];
+    data.data_users=[];
     data.loading = true;
     try {
-      const response = await axios.get('/api/category/index');
+      const header = store.getHeaderConfig;
+      const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/users/index`,header);
       if(response.data.exist){
-        data.data_categories=response.data.categories;
+        data.data_users=response.data.users;
       } 
       else {
         Swal.fire({
             icon: 'error',
-            title: 'Categories...',
+            title: 'Users...',
             text: response.data.message,
           });
       }
     } catch (error) {
         Swal.fire({
               icon: 'error',
-              title: 'Categories...',
+              title: 'Users...',
               text: error,
             });
     }
@@ -162,13 +162,16 @@
   const addUser = async () => {
     store.clearErrors();
     try {
-      const response = await axios.post('/api/user/store', data.user);
+      const token = 'Bearer ' + store.getToken;
+      const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/register`, data.user,{
+                headers: { Authorization: token }
+            });
       if(response.data.success){
-        fetch_data();
+        // fetch_data();
         Swal.fire({
           icon: 'success',
           title: 'User added',
-          text: "User '"+ response.data.user+"' added",
+          text: "User '"+ response.data.user.name+"' added",
         });
       }
       else{
@@ -179,7 +182,11 @@
         });
       }
     } catch (error) {
-      store.setErrors(error.response.data.errors);
+        Swal.fire({
+            icon: 'error',
+            title: 'User...',
+            text: error,
+          });
     }
   }
 
@@ -195,7 +202,7 @@
         })
         .then(async (result) => {
           if (result.isConfirmed) {
-              const response = await axios.delete("/api/user/destroy/"+user.id);
+              const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/user/destroy/`+user.id,{},store.getHeaderConfig);
               if(response.data.success){
                 fetch_data();
                 Swal.fire({

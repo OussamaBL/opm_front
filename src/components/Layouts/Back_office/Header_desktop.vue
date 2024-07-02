@@ -79,7 +79,7 @@
 
     const userLogout = async () => {
         try{
-            const response = await axios.get('/api/logout', store.getHeaderConfig);
+            const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/logout`,{}, store.getHeaderConfig);
 			if(response.data.success){
 				store.clearStoredData();
 				Swal.fire({

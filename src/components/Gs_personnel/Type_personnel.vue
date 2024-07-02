@@ -15,8 +15,8 @@
                           <input type="text" id="modalEditUserFirstName" v-model="data.type_personnel.libelle" class="form-control" placeholder="Saisie libelle" />
                         </div>
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserFirstName">Description</label>
-                          <input type="text" id="modalEditUserFirstName" v-model="data.type_personnel.description" class="form-control" placeholder="Saisie Description" />
+                          <label class="form-label" for="modalEditUserFirstName">Designation</label>
+                          <input type="text" id="modalEditUserFirstName" v-model="data.type_personnel.designation" class="form-control" placeholder="Saisie designation" />
                         </div>
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
                           <label class="form-label" for="modalEditUserFirstName">Unité</label>
@@ -49,14 +49,14 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addType_personnel" data-bs-target="#editUser">Ajouter type personnel</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des type personnel...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des type personnel...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
                             <thead>
                             <tr style="background-color: #051922;">
-                                <th>Code</th>
                                 <th>Libellé</th>
+                                <th>Designation</th>
                                 <th>Unité</th>
                                 <th>Actions</th>
                             </tr>
@@ -66,7 +66,7 @@
                             
                             <tr v-for="type_personnel in data.data_types_personnel.data" :key="type_personnel.id" >
                                 <td>{{ type_personnel.libelle }}</td>
-                                <td>{{ type_personnel.description }}</td>
+                                <td>{{ type_personnel.designation }}</td>
                                 <td>{{ type_personnel.unite.libelle }}</td>
                                 <td>
                                     <div class="dropdown">
@@ -114,7 +114,7 @@
       type_personnel: {
         id: '',
         libelle: '',
-        description: '',
+        designation: '',
         unite_id: '',
       },
       loading:true,
@@ -124,14 +124,14 @@
     const open_modal_addType_personnel = () =>{
         data.action='add';
         data.type_personnel.id= '';
-        data.type_personnel.description= '';
+        data.type_personnel.designation= '';
         data.type_personnel.libelle= '';
         data.type_personnel.unite_id= '';
     }
     const open_modal_updateType_personnel = (type_personnel) =>{
         data.action='edit';
         data.type_personnel.id= type_personnel.id;
-        data.type_personnel.description= type_personnel.description;
+        data.type_personnel.designation= type_personnel.designation;
         data.type_personnel.libelle= type_personnel.libelle;
         data.type_personnel.unite_id= type_personnel.unite_id;
     }
@@ -139,7 +139,7 @@
     const fetch_data_unites = async () => {
       data.data_unites=[];
       try {
-        const response = await axios.get('/api/unites/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/unites/get`);
         if(response.data.exist){
           data.data_unites=response.data.unites;
         } 
@@ -156,7 +156,7 @@
       data.data_types_personnel=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/types_personnel/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/types_personnel/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -188,13 +188,13 @@
     const addType_personnel = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/types_personnel/store', data.type_personnel);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/types_personnel/store`, data.type_personnel);
         if(response.data.success){
           fetch_data();
           Swal.fire({
             icon: 'success',
             title: 'types personnel...',
-            text: "type personnel '"+ response.data.produit+"' added",
+            text: "type personnel '"+ response.data.type_personnel+"' added",
           });
         }
         else{
@@ -221,7 +221,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/types_personnel/destroy/"+type_personnel.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/types_personnel/destroy/`+type_personnel.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -246,7 +246,7 @@
   
     const updateType_personnel = async () => {
       try {
-        const response = await axios.put("/api/types_personnel/update/"+data.type_personnel.id,data.type_personnel);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/types_personnel/update/`+data.type_personnel.id,data.type_personnel);
         if(response.data.success){
           fetch_data();
           Swal.fire({

@@ -63,7 +63,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addConge" data-bs-target="#editUser">Ajouter un Congé</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Congés...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher par date demande ou date debut ou date fin">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -173,7 +173,7 @@
     const fetch_data_personnels = async () => {
       data.data_personnels=[];
       try {
-        const response = await axios.get('/api/personnels/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/personnels/get`);
         if(response.data.exist){
           data.data_personnels=response.data.personnels;
         } 
@@ -190,7 +190,7 @@
       data.data_conges=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/conges/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/conges/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -222,7 +222,7 @@
     const addConges = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/conges/store', data.conge);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/conges/store`, data.conge);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -239,7 +239,20 @@
           });
         }
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -255,7 +268,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/conges/destroy/"+conge.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/conges/destroy/`+conge.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -280,7 +293,7 @@
   
     const updateConges = async () => {
       try {
-        const response = await axios.put("/api/conges/update/"+data.conge.id,data.conge);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/conges/update/`+data.conge.id,data.conge);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -298,7 +311,20 @@
         }
       } 
       catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   

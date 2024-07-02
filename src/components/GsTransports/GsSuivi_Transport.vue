@@ -12,7 +12,7 @@
                       <form id="editUserForm" class="row g-3" onsubmit="return false">
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
                           <label class="form-label" for="modalEditUserFirstName">Etude</label>
-                            <select id="modalEditUserCountry" class="select2 form-select" v-model="data.transport.etude_transport_id" data-allow-clear="true">
+                            <select id="modalEditUserCountry" class="select2 form-select" v-model="data.transport.etude_de_transport_id" data-allow-clear="true">
                                 <option value="">Select</option>
                                 <option v-for="etude_transport in data.data_etude_transports" :key="etude_transport.id" :value="etude_transport.id">{{ etude_transport.code }} - {{ etude_transport.date }}</option>
                             </select>
@@ -54,7 +54,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addTransport" data-bs-target="#editUser">Ajouter un transport</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des transports...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des transports par date de suivi">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -124,7 +124,7 @@
       transport: {
         id: '',
         date: '',
-        etude_transport_id: '',
+        etude_de_transport_id: '',
         machine_id: '',
         quantite: '',
       },
@@ -136,7 +136,7 @@
         data.action='add';
         data.transport.id= '';
         data.transport.date= '';
-        data.transport.etude_transport_id= '';
+        data.transport.etude_de_transport_id= '';
         data.transport.machine_id= '';
         data.transport.quantite= '';
     }
@@ -145,7 +145,7 @@
         data.action='edit';
         data.transport.id= transport.id;
         data.transport.date= transport.date;
-        data.transport.etude_transport_id= transport.etude_transport_id;
+        data.transport.etude_de_transport_id= transport.etude_de_transport_id;
         data.transport.machine_id= transport.machine_id;
         data.transport.quantite= transport.quantite;
 
@@ -154,7 +154,7 @@
     const fetch_data_etude_transports = async () => {
       data.data_etude_transports=[];
       try {
-        const response = await axios.get('/api/etude_transports/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/etude_transports/get`);
         if(response.data.exist){
           data.data_etude_transports=response.data.etude_transports;
         } 
@@ -170,7 +170,7 @@
     const fetch_data_machines = async () => {
       data.data_machines=[];
       try {
-        const response = await axios.get('/api/machines/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/machines/get`);
         if(response.data.exist){
           data.data_machines=response.data.machines;
         } 
@@ -187,7 +187,7 @@
       data.data_transports=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/transports/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/transports/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -219,7 +219,7 @@
     const addTransport = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/transports/store', data.transport);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/transports/store`, data.transport);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -236,7 +236,20 @@
           });
         }
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -252,7 +265,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/transports/destroy/"+transport.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/transports/destroy/`+transport.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -277,7 +290,7 @@
   
     const updateTransport = async () => {
       try {
-        const response = await axios.put("/api/transports/update/"+data.transport.id,data.transport);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/transports/update/`+data.transport.id,data.transport);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -295,7 +308,20 @@
         }
       } 
       catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   

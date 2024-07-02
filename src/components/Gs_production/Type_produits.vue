@@ -10,10 +10,7 @@
                         <h3 class="mb-2">Type</h3>
                       </div>
                       <form id="editUserForm" class="row g-3" onsubmit="return false">
-                        <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserEmail">Code</label>
-                          <input type="text" id="modalEditUserEmail" v-model="data.type_produit.code" class="form-control" placeholder="Saisie le code" />
-                        </div>
+                       
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
                           <label class="form-label" for="modalEditUserFirstName">Libellé</label>
                           <input type="text" id="modalEditUserFirstName" v-model="data.type_produit.libelle" class="form-control" placeholder="Saisie libelle" />
@@ -44,7 +41,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addType" data-bs-target="#editUser">Ajouter type</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher type des produits...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher type des produits...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -129,7 +126,7 @@
       data.data_type_produits=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/type_produits/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/type_produits/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -161,13 +158,13 @@
     const addType = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/type_produits/store', data.type_produit);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/type_produits/store`, data.type_produit);
         if(response.data.success){
           fetch_data();
           Swal.fire({
             icon: 'success',
             title: 'Type produits...',
-            text: "Type produits '"+ response.data.affaire+"' added",
+            text: "Type produits '"+ response.data.type_produit+"' added",
           });
         }
         else{
@@ -178,7 +175,20 @@
           });
         }
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -194,7 +204,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/type_produits/destroy/"+type_produit.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/type_produits/destroy/`+type_produit.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -219,7 +229,7 @@
   
     const updateType = async () => {
       try {
-        const response = await axios.put("/api/type_produits/update/"+data.type_produit.id,data.type_produit);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/type_produits/update/`+data.type_produit.id,data.type_produit);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -237,7 +247,20 @@
         }
       } 
       catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   

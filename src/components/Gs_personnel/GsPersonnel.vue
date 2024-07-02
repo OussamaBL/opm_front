@@ -74,7 +74,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addPersonnel" data-bs-target="#editUser">Ajouter un personnel</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des personnels...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des personnels avec Nom ou Cin...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -199,7 +199,7 @@
     const fetch_data_types_personnel = async () => {
       data.data_types_personnel=[];
       try {
-        const response = await axios.get('/api/types_personnel/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/types_personnel/get`);
         if(response.data.exist){
           data.data_types_personnel=response.data.types_personnel;
         } 
@@ -216,7 +216,7 @@
       data.data_personnels=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/personnels/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/personnels/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -248,7 +248,7 @@
     const addPersonnel = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/personnels/store', data.personnel);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/personnels/store`, data.personnel);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -264,8 +264,22 @@
             text: response.data.message,
           });
         }
-      } catch (error) {
-        store.setErrors(error.response.data.errors);
+      } 
+      catch (error) {
+          const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -281,7 +295,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/personnels/destroy/"+personnel.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/personnels/destroy/`+personnel.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -300,13 +314,26 @@
             }
           });
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
     const updatePersonnel = async () => {
       try {
-        const response = await axios.put("/api/personnels/update/"+data.personnel.id,data.personnel);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/personnels/update/`+data.personnel.id,data.personnel);
         if(response.data.success){
           fetch_data();
           Swal.fire({

@@ -62,7 +62,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addClient" data-bs-target="#editUser">Ajouter client</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Unités...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des client par libelle...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -175,9 +175,9 @@
     const fetch_data_types_client = async () => {
       data.data_types_client=[];
       try {
-        const response = await axios.get('/api/types_client/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/type_clients/get`);
         if(response.data.exist){
-          data.data_types_client=response.data.types_client;
+          data.data_types_client=response.data.type_clients;
         } 
       } catch (error) {
           Swal.fire({
@@ -192,7 +192,7 @@
       data.data_clients=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/clients/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/clients/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -223,7 +223,7 @@
     const addClient = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/clients/store', data.client);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/clients/store`, data.client);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -240,7 +240,20 @@
           });
         }
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -256,7 +269,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/clients/destroy/"+client.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/clients/destroy/`+client.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -281,7 +294,7 @@
   
     const updateClient = async () => {
       try {
-        const response = await axios.put("/api/clients/update/"+data.client.id,data.client);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/clients/update/`+data.client.id,data.client);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -299,7 +312,20 @@
         }
       } 
       catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   

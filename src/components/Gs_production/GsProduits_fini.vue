@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
                           <label class="form-label" for="modalEditUserFirstName">Alertes stock</label>
-                          <input type="text" id="modalEditUserFirstName" v-model="data.produit.alertes_stock" class="form-control" placeholder="Saisie l'alertes stock" />
+                          <input type="number" id="modalEditUserFirstName" v-model="data.produit.alerte_stock" class="form-control" placeholder="Saisie l'alertes stock" />
                         </div>
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
                           <label class="form-label" for="modalEditUserFirstName">Stock initial</label>
@@ -77,7 +77,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addProduit" data-bs-target="#editUser">Ajouter Produit</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des produits...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des produits...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -105,7 +105,7 @@
                                 <td>{{ produit.unite.libelle }}</td>
                                 <td>{{ produit.pu_v_ht }}</td>
                                 <td>{{ produit.tva }}</td>
-                                <td>{{ produit.alertes_stock }}</td>
+                                <td>{{ produit.alerte_stock }}</td>
                                 <td>{{ produit.stock_initial }}</td>
                                 <td>{{ produit.stock_actuel }}</td>
                                 <td>{{ produit.stock_inventaire }}</td>
@@ -161,7 +161,7 @@
         unite_id: '',
         pu_v_ht: '',
         tva: '',
-        alertes_stock: '',
+        alerte_stock: '',
         stock_initial: '',
         stock_actuel: '',
         stock_inventaire: '',
@@ -201,7 +201,7 @@
     const fetch_data_unites = async () => {
       data.data_unites=[];
       try {
-        const response = await axios.get('/api/unites/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/unites/get`);
         if(response.data.exist){
           data.data_unites=response.data.unites;
         } 
@@ -216,7 +216,7 @@
     const fetch_data_type_produits = async () => {
       data.data_type_produits=[];
       try {
-        const response = await axios.get('/api/type_produits/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/type_produits/get`);
         if(response.data.exist){
           data.data_type_produits=response.data.type_produits;
         } 
@@ -233,7 +233,7 @@
       data.data_produits=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/produits_fini/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/produits_fini/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -265,7 +265,7 @@
     const addProduit = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/produits_fini/store', data.produit);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/produits_fini/store`, data.produit);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -282,7 +282,20 @@
           });
         }
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -298,7 +311,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/produits_fini/destroy/"+produit.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/produits_fini/destroy/`+produit.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -323,7 +336,7 @@
   
     const updateProduit = async () => {
       try {
-        const response = await axios.put("/api/produits_fini/update/"+data.produit.id,data.produit);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/produits_fini/update/`+data.produit.id,data.produit);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -341,7 +354,20 @@
         }
       } 
       catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   

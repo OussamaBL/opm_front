@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
                           <label class="form-label" for="modalEditUserFirstName">Nbr de voyage par camion</label>
-                          <input type="text" id="modalEditUserFirstName" v-model="data.etude_transport.nbr_de_voyage_par_camion" class="form-control" placeholder="Saisie nomber de voyage par camion" />
+                          <input type="number" id="modalEditUserFirstName" v-model="data.etude_transport.nbr_de_voyage_par_camion" class="form-control" placeholder="Saisie nomber de voyage par camion" />
                         </div>
 
                         <div class="col-12 text-center">
@@ -97,7 +97,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addEtude_transport" data-bs-target="#editUser">Ajouter Etude transport</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Etudes des transports...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Etudes des transports par constituant ou depart ou arrive">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -106,7 +106,6 @@
                                 <th>Code</th>
                                 <th>Constituant</th>
                                 <th>Unité</th>
-                                <th>Code</th>
                                 <th>date</th>
                                 <th>Temps de travail (H)</th>
                                 <th>Temps de charge (H)</th>
@@ -258,7 +257,7 @@
     const fetch_data_produits = async () => {
       data.data_produits=[];
       try {
-        const response = await axios.get('/api/produits/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/produits_fini/get`);
         if(response.data.exist){
           data.data_produits=response.data.produits;
         } 
@@ -274,7 +273,7 @@
     const fetch_data_unites = async () => {
       data.data_unites=[];
       try {
-        const response = await axios.get('/api/unites/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/unites/get`);
         if(response.data.exist){
           data.data_unites=response.data.unites;
         } 
@@ -291,7 +290,7 @@
       data.data_etude_transports=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/etude_transports/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/etude_transports/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -323,7 +322,7 @@
     const addEtude_transport = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/etude_transports/store', data.etude_transport);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/etude_transports/store`, data.etude_transport);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -340,7 +339,20 @@
           });
         }
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -356,7 +368,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/etude_transports/destroy/"+etude_transport.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/etude_transports/destroy/`+etude_transport.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -381,7 +393,7 @@
   
     const updateEtude_transport = async () => {
       try {
-        const response = await axios.put("/api/etude_transports/update/"+data.etude_transport.id,data.etude_transport);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/etude_transports/update/`+data.etude_transport.id,data.etude_transport);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -399,7 +411,20 @@
         }
       } 
       catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   

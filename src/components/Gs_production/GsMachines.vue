@@ -11,7 +11,7 @@
                       </div>
                       <form id="editUserForm" class="row g-3" onsubmit="return false">
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
-                          <label class="form-label" for="modalEditUserFirstName">Engin</label>
+                          <label class="form-label" for="modalEditUserFirstName">engin</label>
                           <input type="text" id="modalEditUserFirstName" v-model="data.machine.engin" class="form-control" placeholder="Saisie engin" />
                         </div>
                         <div class="col-12 col-md-6" style="margin: 0 auto;">
@@ -28,8 +28,8 @@
                         
 
                         <div class="col-12 text-center">
-                          <button v-if="data.action=='add'" type="submit" @click="addMatricule()" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                          <button v-if="data.action=='edit'" type="submit" @click="updateMatricule()" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                          <button v-if="data.action=='add'" type="submit" @click="addMachine()" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                          <button v-if="data.action=='edit'" type="submit" @click="updateMachine()" class="btn btn-primary me-sm-3 me-1">Submit</button>
                           <button
                             type="button"
                             class="btn btn-label-secondary"
@@ -51,14 +51,14 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addMachine" data-bs-target="#editUser">Ajouter Machine</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Machines...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Machines...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
                             <thead>
                             <tr style="background-color: #051922;">
                                 <th>Code</th>
-                                <th>Engin</th>
+                                <th>engin</th>
                                 <th>Matricule</th>
                                 <th>Unité</th>
                                 <th>Actions</th>
@@ -148,7 +148,7 @@
     const fetch_data_unites = async () => {
       data.data_unites=[];
       try {
-        const response = await axios.get('/api/unites/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/unites/get`);
         if(response.data.exist){
           data.data_unites=response.data.unites;
         } 
@@ -165,7 +165,7 @@
       data.data_machines=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/machines/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/machines/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -197,7 +197,7 @@
     const addMachine = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/machines/store', data.machine);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/machines/store`, data.machine);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -214,7 +214,20 @@
           });
         }
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -230,7 +243,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/machines/destroy/"+machine.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/machines/destroy/`+machine.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -255,7 +268,7 @@
   
     const updateMachine = async () => {
       try {
-        const response = await axios.put("/api/machines/update/"+data.machine.id,data.machine);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/machines/update/`+data.machine.id,data.machine);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -273,7 +286,20 @@
         }
       } 
       catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   

@@ -53,7 +53,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addFourniture" data-bs-target="#editUser">Ajouter Fourniture</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des fournitures...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des fournitures par constituant...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -152,7 +152,7 @@
     const fetch_data_unites = async () => {
       data.data_unites=[];
       try {
-        const response = await axios.get('/api/unites/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/unites/get`);
         if(response.data.exist){
           data.data_unites=response.data.unites;
         } 
@@ -167,7 +167,7 @@
     const fetch_data_fournisseurs = async () => {
       data.data_fournisseurs=[];
       try {
-        const response = await axios.get('/api/fournisseurs/index');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/fournisseurs/get`);
         if(response.data.exist){
           data.data_fournisseurs=response.data.fournisseurs;
         } 
@@ -184,7 +184,7 @@
       data.data_fournitures=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/fournitures/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/fournitures/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -215,7 +215,7 @@
     const addFourniture = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/fournitures/store', data.fourniture);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/fournitures/store`, data.fourniture);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -232,7 +232,20 @@
           });
         }
       } catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   
@@ -248,7 +261,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/fournitures/destroy/"+fourniture.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/fournitures/destroy/`+fourniture.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -273,7 +286,7 @@
   
     const updateFourniture = async () => {
       try {
-        const response = await axios.put("/api/fournitures/update/"+data.fourniture.id,data.fourniture);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/fournitures/update/`+data.fourniture.id,data.fourniture);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -291,7 +304,20 @@
         }
       } 
       catch (error) {
-        store.setErrors(error.response.data.errors);
+        const errors = error.response.data.errors;
+            let errorMessages = '';
+            for (const key in errors) {
+               errorMessages += ` ${errors[key].join(' ')}\n`;
+               errorMessages += '&& ';
+            }
+            if (errorMessages.endsWith('&& ')) {
+                errorMessages = errorMessages.slice(0, -3); // Remove the last two characters
+            }
+            Swal.fire({ 
+                icon: 'error',
+                title: 'Validation Error',
+                text: errorMessages,
+            });
       }
     }
   

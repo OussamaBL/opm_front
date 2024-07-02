@@ -40,7 +40,7 @@
                 <!-- Category List Table -->
                 <div class="card">
                     <button class="btn btn-primary" style="width: 170px;margin: 12px;" data-bs-toggle="modal" @click="open_modal_addUnite" data-bs-target="#editUser">Ajouter unite</button>
-                    <input type="text" v-model="searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Unités...">
+                    <input type="text" v-model="data.searchQuery" @keyup="fetch_data" class="form-control m-3" style="width: 96%;" placeholder="Rechercher des Unités...">
                     <div class="table-responsive text-nowrap">
                         <img v-if="data.loading" src="/images/loading.gif" style="width: 40px;margin: 20px auto;display: block;" alt="Loading">
                         <table v-if="!$data.loading" class="table">
@@ -120,7 +120,7 @@
       data.data_unites=[];
       data.loading = true;
       try {
-        const response = await axios.get('/api/unites/index?page='+page,{
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/unites/index?page=`+page,{
           params: {
             search: data.searchQuery
           }
@@ -152,7 +152,7 @@
     const addUnite = async () => {
       store.clearErrors();
       try {
-        const response = await axios.post('/api/unites/store', data.unite);
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/unites/store`, data.unite);
         if(response.data.success){
           fetch_data();
           Swal.fire({
@@ -185,7 +185,7 @@
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-                const response = await axios.delete("/api/unites/destroy/"+unite.id);
+                const response = await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/unites/destroy/`+unite.id);
                 if(response.data.success){
                   fetch_data();
                   Swal.fire({
@@ -210,7 +210,7 @@
   
     const updateUnite = async () => {
       try {
-        const response = await axios.put("/api/unites/update/"+data.unite.id,data.unite);
+        const response = await axios.put(`${process.env.VUE_APP_API_BASE_URL}/unites/update/`+data.unite.id,data.unite);
         if(response.data.success){
           fetch_data();
           Swal.fire({
