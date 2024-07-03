@@ -15,15 +15,11 @@
           <table v-if="!data.loading" class="table">
             <thead>
               <tr style="background-color: #051922">
-                <th>Code</th>
+                <th>Code produit</th>
                 <th>Produit</th>
                 <th>Unité</th>
-                <th>Entrée comptable</th>
-                <th>Sortie comptable</th>
-                <th>Stock comptable</th>
-                <th>Stock physique</th>
-                <th>Date de l'inventaire</th>
-                <th>Balance</th>
+                <th>Alerte</th>
+                <th>Stock</th>
               </tr>
             </thead>
 
@@ -32,12 +28,8 @@
                 <td>{{ inventaire.produit.code }}</td>
                 <td>{{ inventaire.produit.libelle }}</td>
                 <td>{{ inventaire.produit.unite.libelle }}</td>
-                <td>{{ inventaire.entree_comptable }}</td>
-                <td>{{ inventaire.Sortie_comptable }}</td>
-                <td>{{ inventaire.stock_compatable }}</td>
-                <td>{{ inventaire.stock_physique }}</td>
-                <td>{{ inventaire.date_inventaire }}</td>
-                <td>{{ inventaire.balance }}</td>
+                <td>{{ inventaire.alerte }}</td>
+                <td>{{ inventaire.stock }}</td>
               </tr>
             </tbody>
           </table>
@@ -57,7 +49,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
 
-
 const data = reactive({
   data_inventaires: [],
   data_produits: [],
@@ -66,17 +57,14 @@ const data = reactive({
     id: "",
     produit_id: "",
     unite_id: "",
-    entree_comptable: "",
-    Sortie_comptable: "",
-    stock_compatable: "",
-    stock_physique: "",
-    date_inventaire: "",
-    balance: "",
+    pu: "",
+    stock: "",
   },
   loading: true,
   action: "",
   searchQuery: "",
 });
+
 
 
 const fetch_data_produits = async () => {

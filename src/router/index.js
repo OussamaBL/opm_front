@@ -14,10 +14,14 @@ import GsDocument from "@/components/Gs_stock/GsDocument.vue";
 import GsTransfert from "@/components/Gs_stock/GsTransfert.vue";
 import GsInventaire from "@/components/Gs_stock/GsInventaire.vue";
 import GSMouvement from "@/components/Gs_stock/GsMouvement.vue";
+import AnalyseMouvement from "@/components/Gs_stock/Analyses/AnalyseMouvement.vue";
 import AnalyseInventaire from "@/components/Gs_stock/Analyses/AnalyseInventaire.vue";
 import AnalyseStockeDesCnstituantsDuJour from "@/components/Gs_stock/Analyses/AnalyseStockeDesCnstituantsDuJour.vue";
 import AnalyseStockeDesCnstituantsDuJourParAffire from "@/components/Gs_stock/Analyses/AnalyseStockeDesCnstituantsDuJourParAffire.vue";
 import AnalyseStockeDesPFI from "@/components/Gs_stock/Analyses/AnalyseStockeDesPFI.vue";
+import AnalyseCoutDuStockDesConstituantsParAffire from "@/components/Gs_stock/Analyses/AnalyseCoutDuStockDesConstituantsParAffire.vue";
+import AnalyseCoutDuStockDesProduitsFinisParAffire from "@/components/Gs_stock/Analyses/AnalyseCoutDuStockDesProduitsFinisParAffire.vue";
+import AnalyseReptureDeStock from "@/components/Gs_stock/Analyses/AnalyseReptureDeStock.vue";
 
 
 
@@ -111,6 +115,11 @@ const router = createRouter({
                 component:  GsInventaire,
               },
               {
+                path: '/AnalyseMouvement',
+                name: 'AnalyseMouvement',
+                component:  AnalyseMouvement,
+              },
+              {
                 path: '/AnalyseInventaires',
                 name: 'AnalyseInventaires',
                 component:  AnalyseInventaire,
@@ -129,6 +138,21 @@ const router = createRouter({
                 path: '/AnalyseStockeDesPFI',
                 name: 'AnalyseStockeDesPFI',
                 component:  AnalyseStockeDesPFI,
+              },
+              {
+                path: '/AnalyseCoutDuStockDesConstituantsParAffire',
+                name: 'AnalyseCoutDuStockDesConstituantsParAffire',
+                component:  AnalyseCoutDuStockDesConstituantsParAffire,
+              },
+              {
+                path: '/AnalyseCoutDuStockDesProduitsFinisParAffire',
+                name: 'AnalyseCoutDuStockDesProduitsFinisParAffire',
+                component:  AnalyseCoutDuStockDesProduitsFinisParAffire,
+              },
+              {
+                path: '/AnalyseReptureDeStock',
+                name: 'AnalyseReptureDeStock',
+                component:  AnalyseReptureDeStock,
               },
 
               

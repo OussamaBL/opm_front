@@ -105,17 +105,17 @@
             <thead>
               <tr style="background-color: #051922">
                 <th>Date</th>
-                <th>Code prov</th>
-                <th>Libelle prov</th>
-                <th>Code dest</th>
-                <th>Libelle dest</th>
-                <th>Depot</th>
+                <th>Code provenance</th>
+                <th>Libellé provenance</th>
+                <th>Code destination</th>
+                <th>Libellé destination</th>
+                <th>Dépôt</th>
                 <th>Code</th>
-                <th>designation</th>
+                <th>Désignation</th>
                 <th>Unité</th>
-                <th>Qte</th>
-                <th>Type document</th>
-                <th>N° document</th>
+                <th>Quantité</th>
+                <th>Type de document</th>
+                <th>N° de document</th>
                 <th>N° de commande</th>
                 <th>Action</th>
               </tr>
@@ -173,7 +173,7 @@ import { Bootstrap5Pagination } from "laravel-vue-pagination";
 const store = useAuthStore();
 
 const data = reactive({
-  data_mouvements: { data: [], meta: {} },  
+  data_mouvements: { data: [], meta: {} },
   data_provenances: [],
   data_destinations: [],
   data_depots: [],

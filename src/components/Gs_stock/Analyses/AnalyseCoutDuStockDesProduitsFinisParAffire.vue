@@ -21,9 +21,8 @@
                 <th>Entrée comptable</th>
                 <th>Sortie comptable</th>
                 <th>Stock comptable</th>
-                <th>Stock physique</th>
-                <th>Date de l'inventaire</th>
-                <th>Balance</th>
+                <th>PU</th>
+                <th>Montant</th>
               </tr>
             </thead>
 
@@ -35,9 +34,8 @@
                 <td>{{ inventaire.entree_comptable }}</td>
                 <td>{{ inventaire.Sortie_comptable }}</td>
                 <td>{{ inventaire.stock_compatable }}</td>
-                <td>{{ inventaire.stock_physique }}</td>
-                <td>{{ inventaire.date_inventaire }}</td>
-                <td>{{ inventaire.balance }}</td>
+                <td>{{ inventaire.pu }}</td>
+                <td>{{ inventaire.mantant }}</td>
               </tr>
             </tbody>
           </table>
@@ -57,7 +55,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
 
-
 const data = reactive({
   data_inventaires: [],
   data_produits: [],
@@ -69,14 +66,14 @@ const data = reactive({
     entree_comptable: "",
     Sortie_comptable: "",
     stock_compatable: "",
-    stock_physique: "",
-    date_inventaire: "",
-    balance: "",
+    pu: "",
+    mantant: "",
   },
   loading: true,
   action: "",
   searchQuery: "",
 });
+
 
 
 const fetch_data_produits = async () => {

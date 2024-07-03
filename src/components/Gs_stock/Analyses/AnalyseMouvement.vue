@@ -17,22 +17,23 @@
               <tr style="background-color: #051922;">
                 <th>Date</th>
                 <th>Code prov</th>
-                <th>Libelle prov</th>
+                <th>Libellé prov</th>
                 <th>Code dest</th>
-                <th>Libelle dest</th>
-                <th>Depot</th>
+                <th>Libellé dest</th>
+                <th>Dépôt</th>
                 <th>Code</th>
-                <th>designation</th>
+                <th>Désignation</th>
                 <th>Unité</th>
-                <th>Qte</th>
+                <th>Qté</th>
                 <th>PU HT</th>
-                <th>MT.HT</th>
-                <th>%TVA</th>
-                <th>MT.TVA</th>
-                <th>MT.TTC</th>
-                <th>type de document</th>
+                <th>MT. HT</th>
+                <th>% TVA</th>
+                <th>MT. TVA</th>
+                <th>MT. TTC</th>
+                <th>Type de document</th>
                 <th>N° document</th>
                 <th>N° de commande</th>
+
               </tr>
             </thead>
 
@@ -75,17 +76,16 @@ import { reactive, onMounted } from "vue";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 // import router from '@/router';
-import { useAuthStore } from '@/stores/useAuthStore.js';
 import { Bootstrap5Pagination } from 'laravel-vue-pagination';
 
-const store = useAuthStore();
+
 
 const data = reactive({
   data_mouvements: [],
   data_provenances: [],
   data_destinations: [],
   data_depots: [],
-  data_produits_finis: [],
+  data_produits: [],
   data_unites: [],
   data_documents: [],
   data_commands: [],
@@ -154,17 +154,17 @@ const fetch_data_depots = async () => {
   }
 };
 
-const fetch_data_produits_finis = async () => {
-  data.data_produits_finis = [];
+const fetch_data_produits = async () => {
+  data.data_produits = [];
   try {
     const response = await axios.get('/api/produit_fini/index');
     if (response.data.exist) {
-      data.data_produits_finis = response.data.produits_finis;
+      data.data_produits = response.data.produits;
     }
   } catch (error) {
     Swal.fire({
       icon: 'error',
-      title: 'produits_finis...',
+      title: 'produits...',
       text: error,
     });
   }
@@ -248,7 +248,7 @@ onMounted(() => {
   fetch_data_provenances();
   fetch_data_destinations();
   fetch_data_depots();
-  fetch_data_produits_finis();
+  fetch_data_produits();
   fetch_data_unities();
   fetch_data_documents();
   fetch_data_commandes();

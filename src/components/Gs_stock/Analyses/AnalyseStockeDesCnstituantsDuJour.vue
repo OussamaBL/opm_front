@@ -15,10 +15,10 @@
           <table v-if="!data.loading" class="table">
             <thead>
               <tr style="background-color: #051922">
-                <th>Code produit</th>
+                <th>Code</th>
                 <th>Produit</th>
-                <th>Unite</th>
-                <th>Entree comptable</th>
+                <th>Unité</th>
+                <th>Entrée comptable</th>
                 <th>Sortie comptable</th>
                 <th>Stock comptable</th>
               </tr>
@@ -49,10 +49,8 @@
 import { reactive, onMounted } from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useAuthStore } from "@/stores/useAuthStore.js";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
 
-const store = useAuthStore();
 
 const data = reactive({
   data_inventaires: [],
@@ -60,26 +58,17 @@ const data = reactive({
   data_unites: [],
   inventaire: {
     id: "",
-    date_inventaire: "",
     produit_id: "",
     unite_id: "",
-    stock_physique: "",
+    entree_comptable: "",
+    Sortie_comptable: "",
+    stock_compatable: "",
   },
   loading: true,
   action: "",
   searchQuery: "",
 });
 
-const open_modal_addInventaire = () => {
-  data.action = "add";
-  data.inventaire = {
-    id: "",
-    date_inventaire: "",
-    produit_id: "",
-    unite_id: "",
-    stock_physique: "",
-  };
-};
 
 const fetch_data_produits = async () => {
   data.data_produits = [];
@@ -110,7 +99,6 @@ const fetch_data_unites = async () => {
     });
   }
 };
-
 
 const fetch_data = async (page = 1) => {
   data.data_Inventaires = [];

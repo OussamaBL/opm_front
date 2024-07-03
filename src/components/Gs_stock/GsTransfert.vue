@@ -96,9 +96,9 @@
               <tr style="background-color: #051922">
                 <th>Date de transfert</th>
                 <th>Provenance</th>
-                <th>Destination</th>
+                <th>Detisnation</th>
                 <th>Produit</th>
-                <th>Quantity</th>
+                <th>Quantité</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -220,7 +220,7 @@ const fetch_data_produits = async () => {
   try {
     const response = await axios.get("http://127.0.0.1:8000/api/produits");
     console.log("Response:", response);
-    
+
 
     data.data_produits = response.data.produits;
   } catch (error) {

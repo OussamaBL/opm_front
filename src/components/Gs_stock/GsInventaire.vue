@@ -93,8 +93,8 @@
                 <th>Date de Inventaire</th>
                 <th>Code produit</th>
                 <th>Produit</th>
-                <th>Unite</th>
-                <th>Depot</th>
+                <th>Unité</th>
+                <th>Dépôt</th>
                 <th>Stock physique</th>
                 <th>Action</th>
               </tr>

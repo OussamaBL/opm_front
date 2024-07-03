@@ -61,7 +61,7 @@
             <thead>
               <tr style="background-color: #051922">
                 <th>code</th>
-                <th>Libelle</th>
+                <th>Libellé</th>
                 <th>Action</th>
               </tr>
             </thead>

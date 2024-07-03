@@ -259,7 +259,7 @@
             </a>
             <ul class="menu-sub">
               <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
+                <router-link to="/AnalyseMouvement" class="menu-link">
                   <div data-i18n="Mouvements achats/ventes">Mouvements achats/ventes</div>
                 </router-link>
               </li>
@@ -284,17 +284,17 @@
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
+                <router-link to="/AnalyseCoutDuStockDesConstituantsParAffire" class="menu-link">
                   <div data-i18n="Cout du stock des constituants par affire">Cout du stock des constituants par affire</div>
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
+                <router-link to="/AnalyseCoutDuStockDesProduitsFinisParAffire" class="menu-link">
                   <div data-i18n="Cout du stock des produits finis par affiaire">Cout du stock des produits finis par affiaire</div>
                 </router-link>
               </li>
               <li class="menu-item">
-                <router-link to="/ProductionDashboard" class="menu-link">
+                <router-link to="/AnalyseReptureDeStock" class="menu-link">
                   <div data-i18n="Rupture de stock">Rupture de stock</div>
                 </router-link>
               </li>
