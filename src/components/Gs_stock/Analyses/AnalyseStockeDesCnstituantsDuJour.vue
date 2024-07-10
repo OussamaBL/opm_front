@@ -54,12 +54,11 @@ import { Bootstrap5Pagination } from "laravel-vue-pagination";
 
 const data = reactive({
   data_inventaires: [],
-  data_produits: [],
+  data_produits_fini: [],
   data_unites: [],
   inventaire: {
     id: "",
-    produit_id: "",
-    unite_id: "",
+    produit_fini_id: "",
     entree_comptable: "",
     Sortie_comptable: "",
     stock_compatable: "",
@@ -70,31 +69,16 @@ const data = reactive({
 });
 
 
-const fetch_data_produits = async () => {
-  data.data_produits = [];
+const fetch_data_produits_fini = async () => {
+  data.data_produits_fini = [];
   try {
-    const response = await axios.get("http://127.0.0.1:8000/api/produits");
+    const response = await axios.get("http://127.0.0.1:8000/api/produits_fini/get");
 
-    data.data_produits = response.data.produits;
+    data.data_produits_fini = response.data.produits;
   } catch (error) {
     Swal.fire({
       icon: "error",
-      title: "produits...",
-      text: error,
-    });
-  }
-};
-
-const fetch_data_unites = async () => {
-  data.data_unites = [];
-  try {
-    const response = await axios.get("http://127.0.0.1:8000/api/unites");
-
-    data.data_unites = response.data.unites;
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "unites...",
+      title: "produits_fini...",
       text: error,
     });
   }
@@ -127,8 +111,7 @@ const fetch_data = async (page = 1) => {
 
 onMounted(() => {
   fetch_data();
-  fetch_data_produits();
-  fetch_data_unites();
+  fetch_data_produits_fini();
 });
 </script>
 
