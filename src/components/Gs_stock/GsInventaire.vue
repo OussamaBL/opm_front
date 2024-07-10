@@ -18,23 +18,12 @@
             </div>
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
-              <label class="form-label" for="modalEditUserFirstName">Produit</label>
-              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.inventaire.produit_id"
+              <label class="form-label" for="modalEditUserFirstName">Produit Fini</label>
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.inventaire.produit_fini_id"
                 data-allow-clear="true">
                 <option value="">Select</option>
-                <option v-for="produit in data.data_produits" :key="produit.id" :value="produit.id">
-                  {{ produit.libelle }}
-                </option>
-              </select>
-            </div>
-
-            <div class="col-12 col-md-6" style="margin: 0 auto">
-              <label class="form-label" for="modalEditUserFirstName">Unite</label>
-              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.inventaire.unite_id"
-                data-allow-clear="true">
-                <option value="">Select</option>
-                <option v-for="unite in data.data_unites" :key="unite.id" :value="unite.id">
-                  {{ unite.libelle }}
+                <option v-for="produit_fini in data.data_produits_fini" :key="produit_fini.id" :value="produit_fini.id">
+                  {{ produit_fini.libelle }}
                 </option>
               </select>
             </div>
@@ -101,12 +90,12 @@
             </thead>
 
             <tbody class="table-border-bottom-0">
-              <tr v-for="inventaire in data.data_inventaires.data" :key="inventaire.id">
+              <tr v-for="inventaire in data.data_inventaires" :key="inventaire.id">
                 <td>{{ inventaire.date_inventaire }}</td>
-                <td>{{ inventaire.produit.code }}</td>
-                <td>{{ inventaire.produit.libelle }}</td>
-                <td>{{ inventaire.produit.unite.libelle }}</td>
-                <td>{{ inventaire.depot.libelle }}</td>
+                <td>{{ inventaire.produits.code }}</td>
+                <td>{{ inventaire.produits.libelle }}</td>
+                <td>{{ inventaire.produits.unite.libelle }}</td>
+                <td>{{ inventaire.depots.libelle }}</td>
                 <td>{{ inventaire.stock_physique }}</td>
                 <td>
                   <div class="dropdown">
@@ -131,8 +120,8 @@
           style="margin: 16px; justify-content: center !important" />
       </div>
     </div>
-    <!-- Offcanvas to add new customer -->
   </div>
+
   <!-- / Content -->
 </template>
 
@@ -147,13 +136,13 @@ const store = useAuthStore();
 
 const data = reactive({
   data_inventaires: [],
-  data_produits: [],
+  data_produits_fini: [],
   data_unites: [],
   data_depots: [],
   inventaire: {
     id: "",
     date_inventaire: "",
-    produit_id: "",
+    produit_fini_id: "",
     unite_id: "",
     depot_id: "",
     stock_physique: "",
@@ -168,8 +157,7 @@ const open_modal_addInventaire = () => {
   data.inventaire = {
     id: "",
     date_inventaire: "",
-    produit_id: "",
-    unite_id: "",
+    produit_fini_id: "",
     depot_id: "",
     stock_physique: "",
   };
@@ -180,35 +168,22 @@ const open_modal_updateInventaire = (inventaire) => {
   data.inventaire = { ...inventaire };
 };
 
-const fetch_data_produits = async () => {
-  data.data_produits = [];
+const fetch_data_produits_fini = async () => {
+  data.data_produits_fini = [];
   try {
-    const response = await axios.get("http://127.0.0.1:8000/api/produits");
+    const response = await axios.get("http://127.0.0.1:8000/api/produits_fini/get");
 
-    data.data_produits = response.data.produits;
+    data.data_produits_fini = response.data.produits;
   } catch (error) {
     Swal.fire({
       icon: "error",
-      title: "produits...",
+      title: "produits_fini...",
       text: error,
     });
   }
 };
 
-const fetch_data_unites = async () => {
-  data.data_unites = [];
-  try {
-    const response = await axios.get("http://127.0.0.1:8000/api/unites");
 
-    data.data_unites = response.data.unites;
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "unites...",
-      text: error,
-    });
-  }
-};
 
 const fetch_data_depots = async () => {
   data.data_depots = [];
@@ -226,45 +201,48 @@ const fetch_data_depots = async () => {
 };
 
 const fetch_data = async (page = 1) => {
-  data.data_Inventaires = [];
+  data.data_inventaires = [];
   data.loading = true;
   try {
-    const response = await axios.get(
-      "http://127.0.0.1:8000/api/inventaires?page=" + page,
-      {
-        params: {
-          search: data.searchQuery,
-        },
-      }
-    );
-
-    data.data_Inventaires = response.data.Inventaires;
+    const response = await axios.get("http://127.0.0.1:8000/api/inventaires?page=" + page, {
+      params: {
+        search: data.searchQuery,
+      },
+    });
+    if (response.data && response.data.inventaires) {
+      data.data_inventaires = response.data.inventaires;
+    } else {
+      console.error("Expected key 'inventaires' not found in response");
+    }
   } catch (error) {
     Swal.fire({
       icon: "error",
       title: "Inventaires...",
-      text: error,
+      text: error.message,
     });
   } finally {
     data.loading = false;
   }
 };
 
+
+
 const addInventaire = async () => {
   store.clearErrors();
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/api/Inventaires",
+      "http://127.0.0.1:8000/api/inventaires",
       data.inventaire
     );
 
     if (response.status === 200) {
-      data.data_Inventaires.push(response.data.inventaire);
+      fetch_data();
       Swal.fire({
         icon: "success",
         title: "Inventaires...",
         text: response.data.message,
       });
+
 
       document.querySelector("#editUser .btn-close").click();
     }
@@ -297,13 +275,12 @@ const updateInventaire = async () => {
       data.inventaire
     );
 
-    if (response.status === 200) {
-      data.data_inventaires = data.data_inventaires.map((inventaire) =>
-        inventaire.id === data.inventaire.id ? response.data.inventaire : inventaire
-      );
+    if (response.status === 200 && response.data.inventaire) {
+      fetch_data();
+
       Swal.fire({
         icon: "success",
-        title: "inventaire...",
+        title: "Inventaire mis à jour",
         text: response.data.message,
       });
 
@@ -311,8 +288,8 @@ const updateInventaire = async () => {
     } else {
       Swal.fire({
         icon: "error",
-        title: "inventaire...",
-        text: response.data.message,
+        title: "Erreur",
+        text: response.data.message || "Une erreur est survenue lors de la mise à jour de l'inventaire.",
       });
     }
   } catch (error) {
@@ -328,14 +305,15 @@ const updateInventaire = async () => {
 
       Swal.fire({
         icon: "error",
-        title: "Validation Errors",
+        title: "Erreurs de validation",
         text: errorMessage,
       });
     } else {
-      console.error("An unexpected error occurred", error);
+      console.error("Une erreur inattendue est survenue", error);
     }
   }
 };
+
 
 const deleteInventaire = async (inventaire) => {
   try {
@@ -376,8 +354,7 @@ const deleteInventaire = async (inventaire) => {
 
 onMounted(() => {
   fetch_data();
-  fetch_data_produits();
-  fetch_data_unites();
+  fetch_data_produits_fini();
   fetch_data_depots();
 });
 </script>

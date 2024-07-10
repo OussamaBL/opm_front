@@ -236,7 +236,7 @@
             </router-link>
           </li>
           <li class="menu-item">
-            <router-link to="/Mouvement" class="menu-link">
+            <router-link to="/Mouvements" class="menu-link">
               <div data-i18n="Les Mouvement de stock">Les Mouvement de stock</div>
             </router-link>
           </li>

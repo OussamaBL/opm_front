@@ -7,7 +7,7 @@
         <div class="modal-body">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="text-center mb-4">
-            <h3 class="mb-2">Mouvements de stock</h3>
+            <h3 class="mb-2">Mouvement</h3>
           </div>
           <form id="editUserForm" class="row g-3"
             @submit.prevent="data.action == 'add' ? addMouvement() : updateMouvement()">
@@ -51,18 +51,18 @@
             </div>
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
-              <label class="form-label" for="modalEditUserFirstName">Produit</label>
-              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.mouvement.produit_id"
+              <label class="form-label" for="modalEditUserFirstName">Produit Fini</label>
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.mouvement.produit_fini_id"
                 data-allow-clear="true">
                 <option value="">Select</option>
-                <option v-for="produit in data.data_produits" :key="produit.id" :value="produit.id">
-                  {{ produit.libelle }}
+                <option v-for="produit_fini in data.data_produits_fini" :key="produit_fini.id" :value="produit_fini.id">
+                  {{ produit_fini.libelle }}
                 </option>
               </select>
             </div>
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
-              <label class="form-label" for="modalEditUserFirstName">Type document</label>
+              <label class="form-label" for="modalEditUserFirstName">Documents</label>
               <select id="modalEditUserCountry" class="select2 form-select" v-model="data.mouvement.document_id"
                 data-allow-clear="true">
                 <option value="">Select</option>
@@ -71,6 +71,18 @@
                 </option>
               </select>
             </div>
+
+            <div class="col-12 col-md-6" style="margin: 0 auto">
+              <label class="form-label" for="modalEditUserFirstName">Documents</label>
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.mouvement.commande_id"
+                data-allow-clear="true">
+                <option value="">Select</option>
+                <option v-for="commande in data.data_commandes" :key="commande.id" :value="commande.id">
+                  {{ commande.n_commande }}
+                </option>
+              </select>
+            </div>
+
 
             <div class="col-12 text-center">
               <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
@@ -87,7 +99,7 @@
 
   <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="py-3 mb-2">
-      <span class="text-muted fw-light">Gestion de Stock /</span> Mouvement de stock
+      <span class="text-muted fw-light">Gestion de Stock /</span> Mouvement des stock
     </h4>
     <div class="app-ecommerce-category">
       <!-- Category List Table -->
@@ -122,20 +134,20 @@
             </thead>
 
             <tbody class="table-border-bottom-0">
-              <tr v-for="mouvement in data.data_mouvements.data" :key="mouvement.id">
+              <tr v-for="mouvement in data.data_mouvements" :key="mouvement.id">
                 <td>{{ mouvement.date }}</td>
                 <td>{{ mouvement.provenance.code }}</td>
                 <td>{{ mouvement.provenance.libelle }}</td>
                 <td>{{ mouvement.destination.code }}</td>
                 <td>{{ mouvement.destination.libelle }}</td>
                 <td>{{ mouvement.depot.libelle }}</td>
-                <td>{{ mouvement.produit.code }}</td>
-                <td>{{ mouvement.produit.libelle }}</td>
-                <td>{{ mouvement.produit.unite.libelle }}</td>
-                <td>{{ mouvement.produit.qte }}</td>
+                <td>{{ mouvement.produit_fini.code }}</td>
+                <td>{{ mouvement.produit_fini.libelle }}</td>
+                <td>{{ mouvement.produit_fini.unite.libelle }}</td>
+                <td>{{ mouvement.produit_fini.stock_actuel }}</td>
                 <td>{{ mouvement.document.type_document }}</td>
-                <td>{{ mouvement.document.N_document }}</td>
-                <td>{{ mouvement.N_commande }}</td>
+                <td>{{ mouvement.document.n_document }}</td>
+                <td>{{ mouvement.commande.n_commande }}</td>
                 <td>
                   <div class="dropdown">
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -155,14 +167,15 @@
             </tbody>
           </table>
         </div>
-        <Bootstrap5Pagination :data="data.data_transferts" @pagination-change-page="fetch_data"
+        <Bootstrap5Pagination :data="data.data_mouvements" @pagination-change-page="fetch_data"
           style="margin: 16px; justify-content: center !important" />
       </div>
     </div>
-    <!-- Offcanvas to add new customer -->
   </div>
+
   <!-- / Content -->
 </template>
+
 <script setup>
 import { reactive, onMounted } from "vue";
 import axios from "axios";
@@ -173,49 +186,45 @@ import { Bootstrap5Pagination } from "laravel-vue-pagination";
 const store = useAuthStore();
 
 const data = reactive({
-  data_mouvements: { data: [], meta: {} },
+  data_mouvements: [],
   data_provenances: [],
   data_destinations: [],
   data_depots: [],
-  data_produits: [],
-  data_unites: [],
+  data_produits_fini: [],
   data_documents: [],
   data_commandes: [],
-  searchQuery: "",
-
   mouvement: {
     id: "",
     date: "",
     provenance_id: "",
     destination_id: "",
     depot_id: "",
-    produit_id: "",
+    produit_fini_id: "",
     document_id: "",
     commande_id: "",
   },
   loading: true,
   action: "",
+  searchQuery: "",
 });
 
 const open_modal_addMouvement = () => {
   data.action = "add";
-  data.mouvement.date = "";
-  data.mouvement.provenance_id = "";
-  data.mouvement.destination_id = "";
-  data.mouvement.depot_id = "";
-  data.mouvement.produit_id = "";
-  data.mouvement.document_id = "";
-  data.mouvement.commande_id = "";
+  data.mouvement = {
+    id: "",
+    date: "",
+    provenance_id: "",
+    destination_id: "",
+    depot_id: "",
+    produit_fini_id: "",
+    document_id: "",
+    commande_id: "",
+  };
 };
+
 const open_modal_updateMouvement = (mouvement) => {
   data.action = "edit";
-  data.mouvement.date = mouvement.date;
-  data.mouvement.provenance_id = mouvement.provenance_id;
-  data.mouvement.destination_id = mouvement.destination_id;
-  data.mouvement.depot_id = mouvement.depot_id;
-  data.mouvement.produit_id = mouvement.produit_id;
-  data.mouvement.document_id = mouvement.document_id;
-  data.mouvement.commande_id = mouvement.commande_id;
+  data.mouvement = { ...mouvement };
 };
 
 const fetch_data_provenances = async () => {
@@ -251,10 +260,9 @@ const fetch_data_destinations = async () => {
 const fetch_data_depots = async () => {
   data.data_depots = [];
   try {
-    const response = await axios.get("/api/depot/index");
-    if (response.data.exist) {
-      data.data_depots = response.data.depots;
-    }
+    const response = await axios.get("http://127.0.0.1:8000/api/depots");
+
+    data.data_depots = response.data.depots;
   } catch (error) {
     Swal.fire({
       icon: "error",
@@ -264,31 +272,16 @@ const fetch_data_depots = async () => {
   }
 };
 
-const fetch_data_produits = async () => {
-  data.data_produits = [];
+const fetch_data_produits_fini = async () => {
+  data.data_produits_fini = [];
   try {
-    const response = await axios.get("http://127.0.0.1:8000/api/produits");
+    const response = await axios.get("http://127.0.0.1:8000/api/produits_fini/get");
 
-    data.data_produits = response.data.produits;
+    data.data_produits_fini = response.data.produits;
   } catch (error) {
     Swal.fire({
       icon: "error",
-      title: "produits...",
-      text: error,
-    });
-  }
-};
-
-const fetch_data_unites = async () => {
-  data.data_unites = [];
-  try {
-    const response = await axios.get("http://127.0.0.1:8000/api/unites");
-
-    data.data_unites = response.data.unites;
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "unites...",
+      title: "produits_fini...",
       text: error,
     });
   }
@@ -325,30 +318,31 @@ const fetch_data_commandes = async () => {
 };
 
 const fetch_data = async (page = 1) => {
-  data.data_mouvements = { data: [], meta: {} };
-  console.log(data.data_mouvements);
+  data.data_mouvements = [];
   data.loading = true;
   try {
-    const response = await axios.get(
-      `http://127.0.0.1:8000/api/mouvements?page=${page}`,
-      {
-        params: {
-          search: data.searchQuery,
-        },
-      }
-    );
-
-    data.data_mouvements = response.data.mouvements;
+    const response = await axios.get("http://127.0.0.1:8000/api/mouvements?page=" + page, {
+      params: {
+        search: data.searchQuery,
+      },
+    });
+    if (response.data && response.data.mouvements) {
+      data.data_mouvements = response.data.mouvements;
+    } else {
+      console.error("Expected key 'mouvements' not found in response");
+    }
   } catch (error) {
     Swal.fire({
       icon: "error",
-      title: "mouvements...",
-      text: error,
+      title: "Mouvements...",
+      text: error.message,
     });
   } finally {
     data.loading = false;
   }
 };
+
+
 
 const addMouvement = async () => {
   store.clearErrors();
@@ -359,12 +353,13 @@ const addMouvement = async () => {
     );
 
     if (response.status === 200) {
-      data.data_mouvements.data.push(response.data.mouvement);
+      fetch_data();
       Swal.fire({
         icon: "success",
-        title: "mouvements...",
+        title: "Mouvement...",
         text: response.data.message,
       });
+
 
       document.querySelector("#editUser .btn-close").click();
     }
@@ -397,13 +392,12 @@ const updateMouvement = async () => {
       data.mouvement
     );
 
-    if (response.status === 200) {
-      data.data_mouvements.data = data.data_mouvements.data.map((mouvement) =>
-        mouvement.id === data.mouvement.id ? response.data.mouvement : mouvement
-      );
+    if (response.status === 200 && response.data.mouvement) {
+      fetch_data();
+
       Swal.fire({
         icon: "success",
-        title: "mouvement...",
+        title: "Mouvement mis à jour",
         text: response.data.message,
       });
 
@@ -411,8 +405,8 @@ const updateMouvement = async () => {
     } else {
       Swal.fire({
         icon: "error",
-        title: "mouvement...",
-        text: response.data.message,
+        title: "Erreur",
+        text: response.data.message || "Une erreur est survenue lors de la mise à jour de l'mouvement.",
       });
     }
   } catch (error) {
@@ -428,42 +422,50 @@ const updateMouvement = async () => {
 
       Swal.fire({
         icon: "error",
-        title: "Validation Errors",
+        title: "Erreurs de validation",
         text: errorMessage,
       });
     } else {
-      console.error("An unexpected error occurred", error);
+      console.error("Une erreur inattendue est survenue", error);
     }
   }
 };
+
 
 const deleteMouvement = async (mouvement) => {
   try {
     Swal.fire({
       title: "Confirm Delete",
-      text: `Are you sure you want to delete the mouvement ${mouvement.id}?`,
+      text: `Are you sure you want to delete the mouvement '${mouvement.libelle}'?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, keep it",
+      cancelButtonText: "Cancel",
     }).then(async (result) => {
       if (result.isConfirmed) {
         const response = await axios.delete(
           `http://127.0.0.1:8000/api/mouvements/${mouvement.id}`
         );
-
-        if (response.status === 200) {
-          data.data_mouvements.data = data.data_mouvements.data.filter(
-            (m) => m.id !== mouvement.id
+        if (response.status === 204) {
+          data.data_mouvements = data.data_mouvements.filter(
+            (d) => d.id !== mouvement.id
           );
-          Swal.fire("Deleted!", response.data.message, "success");
+          Swal.fire({
+            icon: "success",
+            title: "mouvement...",
+            text: response.data.message,
+          });
         } else {
-          Swal.fire("Error!", response.data.message, "error");
+          Swal.fire({
+            icon: "error",
+            title: "mouvement...",
+            text: response.data.message,
+          });
         }
       }
     });
   } catch (error) {
-    Swal.fire("Error!", error.message, "error");
+    store.setErrors(error.response.data.errors);
   }
 };
 
@@ -472,15 +474,18 @@ onMounted(() => {
   fetch_data_provenances();
   fetch_data_destinations();
   fetch_data_depots();
-  fetch_data_produits();
-  fetch_data_unites();
+  fetch_data_produits_fini();
   fetch_data_documents();
   fetch_data_commandes();
 });
 </script>
 
-<style scoped>
-.loader {
-  text-align: center;
+<style>
+div:where(.swal2-container) {
+  z-index: 2000;
+}
+
+.table:not(.table-dark) thead:not(.table-dark) th {
+  color: white;
 }
 </style>

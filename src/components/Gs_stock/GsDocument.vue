@@ -142,7 +142,7 @@ const fetch_data = async (page = 1) => {
         search: data.searchQuery,
       },
     });
-    data.data_documents = response.data.docoments;
+    data.data_documents = response.data.documents;
   } catch (error) {
     Swal.fire({
       icon: "error",

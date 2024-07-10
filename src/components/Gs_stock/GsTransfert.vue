@@ -39,20 +39,20 @@
             </div>
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
-              <label class="form-label" for="modalEditUserFirstName">Produit </label>
-              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.transfert.produits_id"
+              <label class="form-label" for="modalEditUserFirstName">Produit Fini</label>
+              <select id="modalEditUserCountry" class="select2 form-select" v-model="data.transfert.produit_fini_id"
                 data-allow-clear="true">
                 <option value="">Select</option>
-                <option v-for="produit in data.data_produits" :key="produit.id" :value="produit.id">
-                  {{ produit.libelle }}
+                <option v-for="produit_fini in data.data_produits_fini" :key="produit_fini.id" :value="produit_fini.id">
+                  {{ produit_fini.libelle }}
                 </option>
               </select>
             </div>
 
             <div class="col-12 col-md-6" style="margin: 0 auto">
-              <label class="form-label" for="modalEditUserFirstName">Quantity</label>
-              <input type="text" id="modalEditUserFirstName" v-model="data.transfert.quantity" class="form-control"
-                placeholder="Saisie la quantity" />
+              <label class="form-label" for="modalEditUserFirstName">Quantite</label>
+              <input type="text" id="modalEditUserFirstName" v-model="data.transfert.quantite" class="form-control"
+                placeholder="Saisie la quantite" />
             </div>
 
             <div class="col-12 text-center">
@@ -106,10 +106,10 @@
             <tbody class="table-border-bottom-0">
               <tr v-for="transfert in data.data_transferts" :key="transfert.id">
                 <td>{{ transfert.date_transfert }}</td>
-                <td>{{ transfert.provenance.libelle }}</td>
-                <td>{{ transfert.destination.libelle }}</td>
-                <td>{{ transfert.produit.libelle }}</td>
-                <td>{{ transfert.quantity }}</td>
+                <td>{{ transfert.provenance?.libelle || N/a }}</td>
+                <td>{{ transfert.destination?.libelle || N/a}}</td>
+                <td>{{ transfert.produit_fini?.libelle || N/a}}</td>
+                <td>{{ transfert.quantite }}</td>
                 <td>
                   <div class="dropdown">
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -150,15 +150,15 @@ const data = reactive({
   data_transferts: [],
   data_provenances: [],
   data_destinations: [],
-  data_produits: [],
+  data_produits_fini: [],
 
   transfert: {
     id: "",
     date_transfert: "",
     provenance_id: "",
     destination_id: "",
-    produits_id: "",
-    quantity: "",
+    produit_fini_id: "",
+    quantite: "",
   },
   searchQuery: "",
   loading: true,
@@ -171,8 +171,8 @@ const open_modal_addTransfert = () => {
   data.transfert.date_transfert = "";
   data.transfert.provenance_id = "";
   data.transfert.destination_id = "";
-  data.transfert.produits_id = "";
-  data.transfert.quantity = "";
+  data.transfert.produit_fini_id = "";
+  data.transfert.quantite = "";
 };
 
 const open_modal_updateTransfert = (transfert) => {
@@ -181,8 +181,8 @@ const open_modal_updateTransfert = (transfert) => {
   data.transfert.date_transfert = transfert.date_transfert;
   data.transfert.provenance_id = transfert.provenance_id;
   data.transfert.destination_id = transfert.destination_id;
-  data.transfert.produits_id = transfert.produits_id;
-  data.transfert.quantity = transfert.quantity;
+  data.transfert.produit_fini_id = transfert.produit_fini_id;
+  data.transfert.quantite = transfert.quantite;
 };
 
 const fetch_data_provenances = async () => {
@@ -215,42 +215,42 @@ const fetch_data_destinations = async () => {
   }
 };
 
-const fetch_data_produits = async () => {
-  data.data_produits = [];
+const fetch_data_produits_fini = async () => {
+  data.data_produits_fini = [];
   try {
-    const response = await axios.get("http://127.0.0.1:8000/api/produits");
-    console.log("Response:", response);
+    const response = await axios.get("http://127.0.0.1:8000/api/produits_fini/get");
 
-
-    data.data_produits = response.data.produits;
+    data.data_produits_fini = response.data.produits;
   } catch (error) {
     Swal.fire({
       icon: "error",
-      title: "produits...",
+      title: "produits_fini...",
       text: error,
     });
   }
 };
 
+
 const fetch_data = async (page = 1) => {
   data.data_transferts = [];
   data.loading = true;
   try {
-    const response = await axios.get(
-      "http://127.0.0.1:8000/api/transferts?page=" + page,
-      {
-        params: {
-          search: data.searchQuery,
-        },
-      }
-    );
-
-    data.data_transferts = response.data.transferts;
+    const response = await axios.get("http://127.0.0.1:8000/api/transferts?page=" + page, {
+      params: {
+        search: data.searchQuery,
+      },
+    });
+    //console.log(response.data.transferts[0].produit_fini.code);
+    if (response.data && response.data.transferts) {
+      data.data_transferts = response.data.transferts;
+    } else {
+      console.error("Expected key 'transferts' not found in response");
+    }
   } catch (error) {
     Swal.fire({
       icon: "error",
       title: "Transferts...",
-      text: error,
+      text: error.message,
     });
   } finally {
     data.loading = false;
@@ -385,7 +385,7 @@ onMounted(() => {
   fetch_data();
   fetch_data_provenances();
   fetch_data_destinations();
-  fetch_data_produits();
+  fetch_data_produits_fini();
 });
 </script>
 
